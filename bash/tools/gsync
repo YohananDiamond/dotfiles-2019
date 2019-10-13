@@ -15,7 +15,7 @@ GSYNC_fPrint() { printf "${GSYNC_Color}%s\e[m\n" "$@"; }
 
 GSYNC_fSyncCurrent() {
 
-	echo "\e[1;35m@GSYNC\e[m : ${PWD##*/}"
+	printf "\e[1;35m@GSYNC\e[m : ${PWD##*/}\n"
 
 	GSYNC_fPrint "01) FETCH"
 	git fetch
