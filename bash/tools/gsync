@@ -3,7 +3,9 @@
 # A little script that runs some syncing tools using git.
 # It is not very recommended for regular repositories. I only use this for personal repositories, when I'm too lazy to run all commands.
 
-set -x
+# Load config
+source ~/git/dotback/config.sh
+
 # Time and color variables
 GSYNC_Time=$(date +"%F %H:%M");
 GSYNC_Color="\e[1;35m";
@@ -61,7 +63,7 @@ if ([[ $1 == "repo" ]] || [[ $1 == "r" ]]); then
 
 # Sync all repos from the list
 elif ([[ $1 == "all" ]] || [[ $1 == "a" ]]); then
-	for foo in "${GSYNC_List[@]}"; do
+	for foo in ${GSYNC_List[@]}; do
 		pushd $foo > /dev/null 2> /dev/null
 		GSYNC_fSyncCurrent
 		popd > /dev/null 2> /dev/null
@@ -72,5 +74,3 @@ else
 	echo 'usage: gsync (repo|r|all|a) (dir)'
 
 fi
-
-echo ${GSYNC_List[@]}
