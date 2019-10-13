@@ -3,6 +3,7 @@
 # A little script that runs some syncing tools using git.
 # It is not very recommended for regular repositories. I only use this for personal repositories, when I'm too lazy to run all commands.
 
+set -x
 # Time and color variables
 GSYNC_Time=$(date +"%F %H:%M");
 GSYNC_Color="\e[1;35m";
@@ -10,9 +11,7 @@ GSYNC_Color="\e[1;35m";
 # Custom-colored print function for GSync
 GSYNC_fPrint() { printf "${GSYNC_Color}%s\e[m\n" "$@"; }
 
-# Sync the repo 
-#if [[ $1 == "repo" ]]; then
-
+# Main syncing code
 GSYNC_fSyncCurrent() {
 
 	printf "\e[1;35m@GSYNC\e[m : ${PWD##*/}\n"
@@ -62,13 +61,16 @@ if ([[ $1 == "repo" ]] || [[ $1 == "r" ]]); then
 
 # Sync all repos from the list
 elif ([[ $1 == "all" ]] || [[ $1 == "a" ]]); then
-	[[ "$GSYNC_List[@]" == 0 ]] \
-		&& echo 'gsync: $GSYNC_List (list of repositories'\'' paths to sync) not set. Please set it.'\n \
-		'Set it like ("~/dir1" "~/dir2" "~/foo")' \
-		&& exit 1;
-	for repo in "${GSYNC_List[@]}"; do
-		pushd $repo > /dev/null 2> /dev/null
+	for foo in "${GSYNC_List[@]}"; do
+		pushd $foo > /dev/null 2> /dev/null
 		GSYNC_fSyncCurrent
 		popd > /dev/null 2> /dev/null
 	done
+
+# Show help if everything is invalid.
+else
+	echo 'usage: gsync (repo|r|all|a) (dir)'
+
 fi
+
+echo ${GSYNC_List[@]}
