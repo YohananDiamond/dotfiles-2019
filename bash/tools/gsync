@@ -15,7 +15,7 @@ GSYNC_fPrint() { printf "${GSYNC_Color}%s\e[m\n" "$@"; }
 
 GSYNC_fSyncCurrent() {
 
-	GSYNC_fPrint "@GSYNC : ${PWD##*/}"
+	echo "\e[1;35m@GSYNC\e[m : ${PWD##*/}"
 
 	GSYNC_fPrint "01) FETCH"
 	git fetch
@@ -31,7 +31,7 @@ GSYNC_fSyncCurrent() {
 	git pull
 
 	GSYNC_fPrint "05) COMMIT"
-	git commit -m "Sync (${GSYNC_TIME})"
+	git commit -m "Sync (${GSYNC_Time})"
 
 	GSYNC_fPrint "06) PUSH"
 	git push
