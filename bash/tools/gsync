@@ -55,6 +55,8 @@ GSYNC_fSyncCurrent() {
 
 }
 
+set +x
+
 # Sync a repo by its path
 if ([[ $1 == "repo" ]] || [[ $1 == "r" ]]); then
 	cd $2
@@ -62,7 +64,7 @@ if ([[ $1 == "repo" ]] || [[ $1 == "r" ]]); then
 
 # Sync all repos from the list
 elif ([[ $1 == "all" ]] || [[ $1 == "a" ]]); then
-	for foo in "${GSYNC_List[@]}"; do
+	for foo in ${GSYNC_List[@]}; do
 		cd $foo
 		GSYNC_fSyncCurrent
 	done
