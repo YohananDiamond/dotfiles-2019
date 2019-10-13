@@ -1,0 +1,134 @@
+.title  { text-align: center; }
+.tag    { background-color: #eee; font-family: monospace;
+			    padding: 2px; font-size: 80%; font-weight: normal; }
+.right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+.left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+.center { margin-left: auto; margin-right: auto; text-align: center; }
+.underline { text-decoration: underline; }
+#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+p.verse { margin-left: 3%; }
+pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    /*font-family: monospace;*/
+    overflow: auto;
+    margin: 1.2em;
+}
+
+pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+}
+
+pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+}
+
+pre.src:hover:before { display: inline;}
+pre.src-sh:before    { content: 'sh'; }
+pre.src-bash:before  { content: 'sh'; }
+pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+pre.src-R:before     { content: 'R'; }
+pre.src-perl:before  { content: 'Perl'; }
+pre.src-java:before  { content: 'Java'; }
+pre.src-sql:before   { content: 'SQL'; }
+
+table { border-collapse:collapse; }
+caption.t-above { caption-side: top; }
+caption.t-bottom { caption-side: bottom; }
+td, th { vertical-align:top;  }
+th.right  { text-align: center;  }
+th.left   { text-align: center;   }
+th.center { text-align: center; }
+td.right  { text-align: right;  }
+td.left   { text-align: left;   }
+td.center { text-align: center; }
+dt { font-weight: bold; }
+.footpara:nth-child(2) { display: inline; }
+.footpara { display: block; }
+.footdef  { margin-bottom: 1em; }
+.figure { padding: 1em; }
+.figure p { text-align: center; }
+.inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+}
+
+#org-div-home-and-up { text-align: right; font-size: 70%; white-space: nowrap; }
+textarea { overflow-x: auto; }
+.linenr { font-size: smaller }
+.code-highlighted { background-color: #ffff00; }
+.org-info-js_info-navigation { border-style: none; }
+#org-info-js_console-label { font-size: 10px; font-weight: bold; white-space: nowrap; }
+.org-info-js_search-highlight { background-color: #ffff00; color: #000000; font-weight: bold; }
+
+/* Above: Original Code
+	 Below: My Code				*/
+
+/* First of all, the main font */
+* {
+		font-family: "Fira Code", "Cascadia Code", "Consolas", "Courier New", "monospace";
+}
+
+/* Hyperlinks */
+a { text-decoration: none; color: #3e73e6; }
+
+/* List Items */
+ul {
+		position: relative;
+		list-style: none;
+		margin-left: 0;
+		padding-left: 1.2em;
+}
+
+ul li:before {
+		content: "* ";
+		position: absolute;
+		left: 0;
+}
+
+/* Tasks, Timestamps */
+.todo { color: #ff6d1f;
+				font-family: "Fira Code"; }
+.done { color: #3ee65a; }
+.timestamp { color: #4ea5bf; }
+.timestamp-kwd { color: #5f9ea0; }
+
+/* Table of Contents */
+#table-of-contents {
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+	overflow: auto;
+}
+
+/* The main outline (file contents) */
+div.outline-2 {
+	margin-left: 2.5%;
+  margin-right: 2.5%;
+	/* The lines below are useful if the "main" div isn't available and
+	   div.outline-2 has to be used. */
+	position: relative;
+}
+
+/* Section Numbers */
+.section-number-4, .section-number-3, .section-number-2 { display: none; }
+
+/* Postamble (Footer) & Preamble (?) */
+#postamble p, #preamble p {
+  text-align: center;
+}
+
+/* Indentation */
+.outline-3, .outline-text-3 { text-indent:  }
+.outline-4, .outline-text-4 { text-indent: 3% }
+.outline-5, .outline-text-5 { text-indent: 4.5% }

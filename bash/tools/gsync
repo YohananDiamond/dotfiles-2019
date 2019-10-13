@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# GSync : Git Sync
+# A little script that runs some syncing tools using git.
+# It is not very recommended for regular repositories. I only use this for personal repositories, when I'm too lazy to run all commands.
+
+# Time and color variables
+GSYNC_Time=$(date +"%F %H:%M");
+GSYNC_Color="\e[1;35m";
+
+# Custom-colored print function for GSync
+GSYNC_fPrint() { printf "${GSYNC_Color}%s\e[m\n" "$@"; }
+
+# Sync the repo 
+#if [[ $1 == "repo" ]]; then
+
+GSYNC_fSyncCurrent() {
+
+	echo "@GSYNC : ${PWD##*/}"
+
+	GSYNC_fPrint "01) FETCH"
+	git fetch
+
+	GSYNC_fPrint "02) LOG (Last 5)"
+	git log --oneline -5
+
+	GSYNC_fPrint "03) STATUS"
+	git add .
+	git status --short
+
+	GSYNC_fPrint "04) PULL"
+	git pull
+
+	GSYNC_fPrint "05) COMMIT"
+	git commit -m "Sync (${GSYNC_TIME})"
+
+	GSYNC_fPrint "06) PUSH"
+	git push
+
+	# Assure Merge Section
+	# This part assures that the conflicts are merged without needing to run the command again.
+
+	GSYNC_fPrint "07) STATUS II"
+	git add .
+	git status --short
+
+	GSYNC_fPrint "08) PULL"
+	git pull
+
+	GSYNC_fPrint "09) COMMIT"
+	git commit -m "Sync (${GSYNC_Time})"
+
+	GSYNC_fPrint "10) PUSH"
+	git push
+
+}
+
+# Sync a repo by its path
+if ([[ $1 == "repo" ]] || [[ $1 == "r" ]]); then
+	pushd $2 > /dev/null 2> /dev/null
+	GSYNC_fSyncCurrent
+	popd > /dev/null 2> /dev/null
+
+# Sync all repos from the list
+elif ([[ $1 == "all" ]] || [[ $1 == "a" ]]); then
+	[[ -z "$GSYNC_List" ]] \
+		&& echo 'gsync: $GSYNC_List (list of repositories'\'' paths to sync) not set. Please set it.'\n \
+		'Set it like ("~/dir1" "~/dir2" "~/foo")' \
+		&& return 1;
+	for repo in "${GSYNC_List[@]}"; do
+		pushd $repo > /dev/null 2> /dev/null
+		GSYNC_fSyncCurrent
+		popd > /dev/null 2> /dev/null
+	done
+fi
