@@ -62,10 +62,10 @@ if ([[ $1 == "repo" ]] || [[ $1 == "r" ]]); then
 
 # Sync all repos from the list
 elif ([[ $1 == "all" ]] || [[ $1 == "a" ]]); then
-	[[ -z "$GSYNC_List" ]] \
+	[[ "$GSYNC_List[@]" == 0 ]] \
 		&& echo 'gsync: $GSYNC_List (list of repositories'\'' paths to sync) not set. Please set it.'\n \
 		'Set it like ("~/dir1" "~/dir2" "~/foo")' \
-		&& return 1;
+		&& exit 1;
 	for repo in "${GSYNC_List[@]}"; do
 		pushd $repo > /dev/null 2> /dev/null
 		GSYNC_fSyncCurrent
