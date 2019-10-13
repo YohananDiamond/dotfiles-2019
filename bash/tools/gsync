@@ -4,6 +4,8 @@
 # It is not very recommended for regular repositories. I only use this for personal repositories, when I'm too lazy to run all commands.
 
 # Load config
+# Inside the config file, put a command exporting a list with the repositories' paths.
+# e.g.: export GSYNC_List=(dir1 dir2)
 source ~/git/dotback/config.sh
 
 # Time and color variables
@@ -64,12 +66,13 @@ if ([[ $1 == "repo" ]] || [[ $1 == "r" ]]); then
 
 # Sync all repos from the list
 elif ([[ $1 == "all" ]] || [[ $1 == "a" ]]); then
+	# To set this: 
 	for foo in ${GSYNC_List[@]}; do
 		cd $foo
 		GSYNC_fSyncCurrent
 	done
 
-# Show help if everything is invalid.
+# Show help if the arguments are invalid.
 else
 	echo 'usage: gsync (repo|r|all|a) (dir)'
 
