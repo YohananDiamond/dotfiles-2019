@@ -63,7 +63,7 @@ if ([[ $1 == "repo" ]] || [[ $1 == "r" ]]); then
 
 # Sync all repos from the list
 elif ([[ $1 == "all" ]] || [[ $1 == "a" ]]); then
-	for foo in ${GSYNC_List[@]}; do
+	for foo in "${GSYNC_List[@]}"; do
 		pushd $foo > /dev/null 2> /dev/null
 		GSYNC_fSyncCurrent
 		popd > /dev/null 2> /dev/null
