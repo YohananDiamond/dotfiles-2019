@@ -60,7 +60,7 @@ GSYNC_fSyncCurrent() {
 set +x
 
 # Sync a repo by its path
-if ([[ $1 == "repo" ]] || [[ $1 == "r" ]]); then
+if ([[ $1 == "dir" ]] || [[ $1 == "d" ]]); then
 	cd $2
 	GSYNC_fSyncCurrent
 
@@ -74,6 +74,8 @@ elif ([[ $1 == "all" ]] || [[ $1 == "a" ]]); then
 
 # Show help if the arguments are invalid.
 else
-	echo 'usage: gsync (repo|r|all|a) (dir)'
+	echo 'usage: gsync (option) ($2)'
+	echo 'option: dir | d = specified dir ($2)'
+	echo 'option: all | a = all from list $GSYNC_List'
 
 fi
