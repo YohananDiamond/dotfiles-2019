@@ -1,0 +1,4 @@
+# Setup the windows
+rename-window "editor"
+send-keys 'vim' Enter
+new-window

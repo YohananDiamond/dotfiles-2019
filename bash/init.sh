@@ -50,11 +50,10 @@ import() {
 
 # Run a tmux session or restore it
 tmx() {
-    [[ -n $1 ]] \
+	[[ -n $1 ]] \
 		&& (tmux attach -t $1 $2 &>/dev/null \
-		|| tmux new-session -s $1 \; source-file $HOME/git/datafiles/config/tmux/sessions/$1.proj \; $2) \
-	    || echo 'Usage: tmx setup-name <optional command>'
-
+			|| tmux new-session -s $1 \; source-file ${WD_InitPath}/../tmux/sessions/$1.proj \; $2) \
+	|| echo 'Usage: tmx setup-name <optional command>'
 }
 
 # Send the quit command to all panes/windows/sessions on tmux
@@ -96,8 +95,9 @@ if [[ $WD_FirstRun == 0 ]]; then
 	# Set the FirstRun var to true
 	WD_FirstRun=1
 
-	# Run "tmx main", starting the main tmux session.
+	# Start the "back" and "main" tmux sessions.
 	[[ -z "$TMUX" ]] \
+		&& tmx back detach \
 		&& tmx main
 
 fi

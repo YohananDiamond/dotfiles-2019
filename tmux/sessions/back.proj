@@ -1,0 +1,3 @@
+# Setup the windows
+rename-window "python3"
+send-keys 'python3' Enter 'C-l'
