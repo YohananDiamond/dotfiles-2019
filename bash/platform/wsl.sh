@@ -10,7 +10,7 @@ WD_GitRepos="$HOME/git"
 #############
 
 # Connect to the X Server (VcXsrv)
-export DISPLAY="localhost:0.0"
+export DISPLAY=localhost:0.0
 
 #############
 # FUNCTIONS #

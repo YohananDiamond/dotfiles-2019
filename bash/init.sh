@@ -72,10 +72,10 @@ tquit() {
 	|| PATH="$PATH:${WD_InitPath}/tools"
 
 # Platform-based
-if [[ $PLATFORM == "wsl" ]]; then
+if [[ ${WD_Platform} == "wsl" ]]; then
 	import "platform/wsl"
 	import "sets/tr"
-elif [[ $PLATFORM == "termux" ]]; then
+elif [[ ${WD_Platform} == "termux" ]]; then
 	import "platform/termux"
 fi
 
