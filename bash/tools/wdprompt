@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # Define Default Prompt
-[[ "$PLATFORM" == "wsl" ]] && WD_DefaultPrompt=0 \
-	|| [[ "$PLATFORM" == "regular" ]] && WD_DefaultPrompt=1 \
-	|| [[ "$PLATFORM" == "termux" ]] && WD_DefaultPrompt=1 \
-	|| WD_DefaultPrompt=0;
+if [[ "$WD_Platform" == "wsl" ]]; then WD_DefaultPrompt=0
+elif [[ "$WD_Platform" == "regular" ]]; then WD_DefaultPrompt=1
+elif [[ "$WD_Platform" == "termux" ]]; then WD_DefaultPrompt=2
+else WD_DefaultPrompt=0; fi
 
 # Set the choice
 if [[ -z $1 ]]; then

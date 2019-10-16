@@ -15,10 +15,13 @@
 WD_InitPath=$(dirname $BASH_SOURCE)
 
 # Current Platform
-# (TODO) Improve this. It looks kinda flawled and hard to use.
-[[ -r "/sdcard" ]] && WD_Platform="termux" \
-	|| [[ -r "/mnt/c/Windows" ]] && WD_Platform="wsl" \
-	|| WD_Platform="regular"
+if [[ -r /sdcard ]]; then
+	WD_Platform="termux"
+elif [[ -r "/mnt/c/Windows" ]]; then
+	WD_Platform="wsl" && echo foo
+else
+	WD_Platform="regular"
+fi
 
 #############
 # INIT VARS #
