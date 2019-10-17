@@ -10,10 +10,6 @@ command! -nargs=1 Import
 command! -nargs=0 Reload
 	\ source $MYVIMRC
 
-" Import some scripts
-Import 'contents/keymaps'
-Import 'contents/editor'
-
 
 " WSL
 if isdirectory('/mnt/c/Windows')
@@ -35,6 +31,10 @@ elseif isdirectory('C:\')
 	let g:Platform = 'windows'
 
 endif
+
+" Import some scripts
+Import 'contents/keymaps'
+Import 'contents/editor'
 
 " gVim (general)
 if has('gui_running')
