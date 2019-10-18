@@ -43,13 +43,13 @@ if has('gui_running')
 " Terminal Vim (general)
 else
 	Import 'exclusive/term'
-	" For some weird reason, terminal vim on my WSL instance was glitching if only loading the edge theme directly, so I have added the load of another theme before.
-	Import 'themes/plastic'
 
 endif
 
 " Run Plugins
 if (g:Platform != 'windows')
+	Import 'plugins'
+else
 	Import 'plugins'
 endif
 
@@ -57,6 +57,8 @@ endif
 "Import 'themes/themeAssist'
 
 " Load the theme
+" For some weird reason, vim on my WSL instance was glitching if only loading the edge theme directly, so I have added the load of another theme before. This somehow works and I have no idea why.
+Import 'themes/plastic'
 Import 'themes/edge'
 
 " Load custom settings

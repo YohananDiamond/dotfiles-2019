@@ -49,10 +49,10 @@ set display+=lastline
 set linebreak
 
 " Create command to toggle whitespace mode
-command! -nargs=0 OptWhitespaceMode set list!
+command! -nargs=0 WhitespaceMode set list!
 
 " Create command to toggle wrap
-command! -nargs=0 OptWrapMode set wrap!
+command! -nargs=0 WrapMode set wrap!
 set wrap
 
 " Create function to set tab indentation

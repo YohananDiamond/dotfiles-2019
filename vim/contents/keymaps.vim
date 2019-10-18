@@ -32,11 +32,11 @@ nnoremap <silent> <Leader>a ggVG
 vnoremap <silent> <Leader>a <Esc>ggVG
 
 " Copy to registers
-nnoremap <silent> <Leader>y "+y
-nnoremap <silent> <Leader>p "+p
+nnoremap <silent> <Leader>c "+y
+nnoremap <silent> <Leader>v "+p
 nnoremap <silent> <Leader>x "+x
-vnoremap <silent> <Leader>y "+y
-vnoremap <silent> <Leader>p "+p
+vnoremap <silent> <Leader>c "+y
+vnoremap <silent> <Leader>v "+p
 vnoremap <silent> <Leader>x "+x
 
 " Move by graphic, not physical line
@@ -67,7 +67,7 @@ inoremap <silent> <C-x>0 <C-o>:close<CR>
 vnoremap <silent> <C-x>0 <Esc>:close<CR>
 
 " Clear search query
-nnoremap <silent> <Leader>c :noh<CR>
+nnoremap <silent> <Leader>/ :noh<CR>
 
 " Actually delete instead of cutting
 nnoremap d "_d
