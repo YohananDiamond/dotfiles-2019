@@ -18,7 +18,7 @@ WD_InitPath=$(dirname $BASH_SOURCE)
 if [[ -r /sdcard ]]; then
 	WD_Platform="termux"
 elif [[ -r "/mnt/c/Windows" ]]; then
-	WD_Platform="wsl" && echo foo
+	WD_Platform="wsl"
 else
 	WD_Platform="regular"
 fi

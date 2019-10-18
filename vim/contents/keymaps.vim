@@ -32,11 +32,11 @@ nnoremap <silent> <Leader>a ggVG
 vnoremap <silent> <Leader>a <Esc>ggVG
 
 " Copy to registers
-nnoremap <silent> <Leader>c "+y
-nnoremap <silent> <Leader>v "+p
+nnoremap <silent> <Leader>y "+y
+nnoremap <silent> <Leader>p "+p
 nnoremap <silent> <Leader>x "+x
-vnoremap <silent> <Leader>c "+y
-vnoremap <silent> <Leader>v "+p
+vnoremap <silent> <Leader>y "+y
+vnoremap <silent> <Leader>p "+p
 vnoremap <silent> <Leader>x "+x
 
 " Move by graphic, not physical line

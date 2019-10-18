@@ -91,3 +91,10 @@ if (g:Platform == 'windows')
     set statusline+=\ %l:%c
     set statusline+=\ 
 endif
+
+" Autocmds for FileTypes
+autocmd BufNewFile,BufRead,BufEnter *.mq :set filetype=mq 
+autocmd FileType mq :call OptSpaceIndentation(2) 
+autocmd FileType mq :nnoremap <buffer><silent> <Leader>c I\# <esc>A #/<esc>
+autocmd FileType python :nnoremap <buffer><silent> <Leader>c I#<esc>
+autocmd FileType vim :nnoremap <buffer><silent> <Leader>c I"<esc>
