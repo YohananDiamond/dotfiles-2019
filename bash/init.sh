@@ -14,6 +14,9 @@
 # The directory of this path
 WD_InitPath=$(dirname $BASH_SOURCE)
 
+# Make all processes know the amount of columns on the screen
+export COLUMNS
+
 # Current Platform
 if [[ -r /sdcard ]]; then
 	WD_Platform="termux"
@@ -85,6 +88,7 @@ fi
 # Any platform
 import "sets/aliases"
 import "sets/utilfuncs"
+import "sets/appsets"
 
 #############
 # FINISHING #

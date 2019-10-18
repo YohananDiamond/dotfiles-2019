@@ -6,8 +6,14 @@ if !exists('g:plugs')
     Import 'contents/plug'
 endif
 
-if (g:Platform != 'windows') | let s:plugstr = '~/.vim/plugged/'
-else | let s:plugstr = '$VIM/plugged/'
+if (g:Platform != 'windows')
+    let s:plugstr = '~/.vim/plugged/'
+else
+    if exists('E:/files/scripts/vim')
+        let s:plugstr = 'E:/files/scripts/vim-plugged/'
+    else
+        let s:plugstr = $HOME . '/yst/scripts/vim-plugged/'
+    endif
 endif
 
 " Start plugin thing
