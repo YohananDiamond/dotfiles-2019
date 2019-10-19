@@ -25,7 +25,7 @@ wdmnt() {
 	elif [[ $1 == "-u" ]]; then
 		[[ -z $2 ]] \
 			&& echo "wdmnt -u: unnamed mount drive" \
-			|| sudo umount "/mnt/$2"
+			|| pushd ~ >/dev/null 2>/dev/null && sudo umount "/mnt/$2" && popd >/dev/null 2>/dev/null
 	else
 		echo "Usage: wdmnt \'-m | -mu\' drivename"
 	fi

@@ -98,3 +98,15 @@ autocmd FileType mq :call OptSpaceIndentation(2)
 autocmd FileType mq :nnoremap <buffer><silent> <Leader>c I\# <esc>A #/<esc>
 autocmd FileType python :nnoremap <buffer><silent> <Leader>c I#<esc>
 autocmd FileType vim :nnoremap <buffer><silent> <Leader>c I"<esc>
+
+" FAILED CODE - I might remake this later.
+" Prevent some glitchy parens
+" I am not sure if this is a consistent behavior, so for now I won't be trying to send a pull request to the actual plugin.
+"func! AutoPairCheck(char)
+"    let l:charToLeft = matchstr(getline('.'), '\%' . col('.') . 'c.')
+"    for l:allowMatch in [')', ']', '}']
+"        if (l:charToLeft == l:allowMatch)
+"            call AutoPairsInsert(a:char)
+"        endif
+"    endfor
+"endfunc
