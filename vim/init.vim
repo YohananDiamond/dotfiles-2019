@@ -10,7 +10,6 @@ command! -nargs=1 Import
 command! -nargs=0 Reload
 	\ source $MYVIMRC
 
-
 " WSL
 if isdirectory('/mnt/c/Windows')
 	let g:Platform = 'wsl'

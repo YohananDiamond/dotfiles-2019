@@ -35,4 +35,4 @@ function! LightlineFilename()
 endfunction
 
 " Buftabline
-call buftabline#update(0)
+"call buftabline#update(0)

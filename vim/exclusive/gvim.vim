@@ -7,5 +7,5 @@ set guioptions=agit
 if (g:Platform != 'windows')
 	let &guifont='Cascadia Code 10.5,Consolas 12'
 else
-	let &guifont='Cascadia Code:h10.5,Consolas:12'
+	let &guifont='Cascadia Code:h10.5,Consolas:h12'
 endif
