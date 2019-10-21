@@ -103,7 +103,7 @@ if [[ $WD_FirstRun == 0 ]]; then
 	WD_FirstRun=1
 
 	# Start the "back" and "main" tmux sessions.
-	[[ -z "$TMUX" ]] \
+	[[ -z "$TMUX" ]] && [[ $PWD == $HOME ]] \
 		&& tmx back detach \
 		&& tmx main
 
