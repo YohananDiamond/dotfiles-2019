@@ -1,0 +1,129 @@
+" Vim Test File
+" Author: YohananDiamond
+" Repository: https://github.com/YohananDiamond/dotfiles
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set nocompatible
+execute pathogen#infect()
+
+" Initial Variables
+let g:Config = {}
+let g:Config.InitPath = resolve(expand('<sfile>:p:h'))
+
+" Set up import and reload commands
+command! -nargs=1 Import
+	\ exec 'source ' . g:InitPath . "/" . eval(<f-args>) . '.vim'
+command! -nargs=0 Reload
+	\ source $MYVIMRC
+
+" GUI or not
+if has('gui_running')
+    set guioptions=agit
+
+    if !isdirectory('C:\')
+        let &guifont='Cascadia Code 10.5,Consolas 12,Monospace 12'
+    else
+        let &guifont='Cascadia Code:h10.5,Consolas:h12,monospace:h12'
+    endif
+endif
+
+" Set status line settings (when not using lightline)
+if isdirectory('C:\')
+    set statusline=\ %f
+    set statusline+=%=
+    set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+    set statusline+=\ [%{&fileformat}\]\ 
+    set statusline+=\ %p%%\ 
+    set statusline+=\ %l:%c
+    set statusline+=\ 
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <Editor settings & etc.>
+
+" TODO Make fork of vim-orgmode
+" TODO Move line
+" TODO download python mode & light completer
+" TODO Make a better buffer delete thing and put it on a plugin
+" TODO make a better mapping system that uses \ for Leader (plugins) and ;,<Space> for my custom mappings -- and use functions for that
+" TODO Make my functions for ({[<Backspace><Tab> etc.
+
+syntax on
+set backspace=indent,eol,start
+set laststatus=2 " Enable status bar
+set number " Numbers on the left edge of the screen
+set encoding=utf-8
+set textwidth=0 wrapmargin=0 " Prevent physical linebreak
+set wildmode=longest,list " Bash-like command completion
+set hidden " Prevent quitting vim with 
+set autoindent " For keeping the same indentation level on new liens
+set hlsearch incsearch " Highlight & increment
+set virtualedit=
+set display+=lastline
+set linebreak
+set wrap
+set mouse=a " Enable mouse
+
+" Commands
+command! -nargs=0 WhitespaceMode set list!
+command! -nargs=0 WrapMode set wrap!
+
+" Listchars
+set listchars=tab:»\ 
+set listchars+=space:·
+set listchars+=extends:%
+set listchars+=precedes:%
+set listchars+=eol:$,
+set listchars+=trail:~
+
+filetype plugin indent on " Idk what is this but it seems to work.
+
+" Set color theme
+set background=dark
+colorscheme edge
+"colorscheme plastic
+
+" Autocmds
+autocmd BufNewFile,BufRead,BufEnter *.mq :set filetype=mq 
+autocmd FileType mq :call OptSpaceIndentation(2) 
+autocmd FileType mq :nnoremap <buffer><silent> <Leader>c I\# <esc>A #/<esc>
+autocmd FileType python :nnoremap <buffer><silent> <Leader>c I#<esc>
+autocmd FileType vim :nnoremap <buffer><silent> <Leader>c I"<esc>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <Option Functions>
+
+" Create function to set tab indentation
+func! OptTabIndentation(size)
+	let &tabstop=a:size
+	let &shiftwidth=a:size
+	set noexpandtab
+endfunction
+
+" Create function to set space indentation
+func! OptSpaceIndentation(size)
+	let &tabstop=a:size
+	let &shiftwidth=a:size
+	set expandtab
+	set softtabstop=0
+	set smarttab
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <Run Autoload Plugins>
+
+call keymaps#init() " My keymaps
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <Plugin Settings>
+
+" Lightline
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename' ] ],
+      \ }}
+
+" Space Indentation
+call OptSpaceIndentation(4)
