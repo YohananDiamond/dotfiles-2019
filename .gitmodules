@@ -25,3 +25,9 @@
 [submodule "vim/bundle/vim-abolish"]
 	path = vim/bundle/vim-abolish
 	url = https://github.com/tpope/vim-abolish
+[submodule "vim/bundle/--force"]
+	path = vim/bundle/--force
+	url = https://github.com/ajh17/VimCompletesMe
+[submodule "vim/bundle/nerdtree"]
+	path = vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree
