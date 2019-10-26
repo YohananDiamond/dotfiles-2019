@@ -13,7 +13,8 @@ let g:Config.InitPath = resolve(expand('<sfile>:p:h'))
 
 " Set up import and reload commands
 command! -nargs=1 Import
-	\ exec 'source ' . g:InitPath . "/" . eval(<f-args>) . '.vim'
+    \ if isdirectory('C:\') | let s:extra = '/vimfiles' | else | let s:extra = '' | endif |
+	\ exec 'source ' . g:Config.InitPath . s:extra . "/" . eval(<f-args>) . '.vim'
 command! -nargs=0 Reload
 	\ source $MYVIMRC
 
@@ -68,6 +69,7 @@ set virtualedit=
 set display+=lastline
 set linebreak
 set wrap
+set cursorline
 set mouse=a " Enable mouse
 
 " Commands
@@ -116,8 +118,10 @@ func! OptSpaceIndentation(size)
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" <Run Autoload Plugins>
+" <Run Personal Plugins>
 
+Import 'plugins/itr'
+Import 'plugins/keymaps'
 call keymaps#init() " My keymaps
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""

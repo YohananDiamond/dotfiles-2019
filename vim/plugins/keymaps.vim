@@ -1,7 +1,7 @@
 " Keymaps
 " Author: YohananDiamond
 
-func keymaps#init()
+func! keymaps#init()
     " Map the leader key to backslash
     let mapleader = '\'
 
@@ -14,6 +14,14 @@ func keymaps#init()
     tnoremap <silent> <C-x><left> <C-w>:bp<CR>
     vnoremap <silent> <C-x><right> <Esc>:bn<CR>
     vnoremap <silent> <C-x><left> <Esc>:bp<CR>
+    nnoremap <silent> <C-x>l :bn<CR>
+    nnoremap <silent> <C-x>h :bp<CR>
+    inoremap <silent> <C-x>l <C-o>:bn<CR>
+    inoremap <silent> <C-x>h <C-o>:bp<CR>
+    tnoremap <silent> <C-x>l <C-w>:bn<CR>
+    tnoremap <silent> <C-x>h <C-w>:bp<CR>
+    vnoremap <silent> <C-x>l <Esc>:bn<CR>
+    vnoremap <silent> <C-x>h <Esc>:bp<CR>
 
     " Switch between tabs
     nnoremap <silent> <C-x>o :tabn<CR>
@@ -25,9 +33,11 @@ func keymaps#init()
     vnoremap <silent> <C-x>o <Esc>:tabn<CR>
     vnoremap <silent> <C-x>k <Esc>:tabp<CR>
 
-    " Go to start/end of a document
-    "nnoremap <silent> <C-Home> :0<CR>
-    "nnoremap <silent> <C-End> :$<CR>
+    " Go to start/end of a document or line
+    nnoremap <silent> K :0<CR>
+    nnoremap <silent> J :$<CR>
+    nnoremap <silent> L g<End>
+    nnoremap <silent> H g<Home>
 
     " Mouse Wheel Scrolling
     map <ScrollWheelUp> <C-U>
@@ -79,4 +89,29 @@ func keymaps#init()
     nnoremap d "_d
     vnoremap d "_d
 
+    " Use "jj" on insert mode to go back to normal
+    inoremap jj <Esc>
+
+    " Insert literal character sequences that I ended up replacing in insert mode
+    inoremap <C-l>jj jj
+
+    " TODO Make more <C-l> mappings, it looks like a good key
+
+    " Use the ç key (; on english keyboard, but my keyboard is portuguese/brazilian) on normal mode to some interesting actions.
+    " nnoremap çw :w<CR>
+    " nnoremap çd :bd<CR>
+    " nnoremap çld :bd!<CR>
+
+    " Don't move in insert mode! (exercise)
+    " inoremap <silent> <left> <Esc>a
+    " inoremap <silent> <right> <Esc>a
+    " inoremap <silent> <up> <C-p>
+    " inoremap <silent> <down> <C-n>
+
+    " Folding Commands
+    nnoremap <silent> <space><right> zO
+    nnoremap <silent> <space><left> zm
+    nnoremap <silent> <space>l zO
+    nnoremap <silent> <space>h zm
+ 
 endfunc
