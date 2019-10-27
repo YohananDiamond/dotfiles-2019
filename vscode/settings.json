@@ -59,7 +59,10 @@
     /*{ "before": ["<tab>"], "after": [">", ">"] },*/ // Removed because its equivalent (<S-Tab>) is not working yet.
     { "before": ["<leader>", "p"], "commands": ["editor.action.clipboardPasteAction"] },
     { "before": ["<leader>", "x"], "commands": ["editor.action.clipboardCutAction"] },
-    { "before": ["<leader>", "y"], "commands": ["editor.action.clipboardCopyAction"] }
+    { "before": ["<leader>", "y"], "commands": ["editor.action.clipboardCopyAction"] },
+    { "before": ["J"], "commands": [":$"] },
+    { "before": ["K"], "commands": [":0"] },
+    { "before": ["<leader>", "<space>"], "commands": ["editor.toggleFold"] }
   ],
   "vim.handleKeys": {
       "<C-a>": false,
@@ -77,5 +80,6 @@
      */
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
-    "window.zoomLevel": 0
+    "window.zoomLevel": 0,
+    //"terminal.integrated.shellArgs.linux": ["-c", "tmux attach-session -t vscode"]
 }

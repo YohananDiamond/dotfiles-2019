@@ -37,6 +37,25 @@ fi
 # FUNCTIONS #
 #############
 
+# A temporary git thing. Not very easy to use.
+g() {
+    if [[ -n $1 ]]; then
+        for x in $1/*; do
+            echo $'\e[36m' "In repository $x"
+            cd $x
+            git status --short
+            cd ..
+        done
+    else
+        local NUL=0
+        git pull
+        printf "Press ENTER to continue: "
+        read NUL
+        git add .
+        git commit
+    fi
+}
+
 # import: run .sh files inside this directory.
 import() {
 
