@@ -1,3 +1,6 @@
-# Setup the windows
-send-keys 'vim' Enter
+# Window 1: Notes
+send-keys 'cd ~/git/orgnz' Enter
+send-keys 'vi' Enter '-'
+
+# Window 2: Free Slot
 new-window
