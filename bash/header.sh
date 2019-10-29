@@ -15,7 +15,7 @@ tmx() {
     # Run a tmux session or restore it
     [[ -n $1 ]] \
 		&& (tmux attach -t $1 $2 &>/dev/null \
-			|| tmux new-session -s $1 \; source-file ${WD_InitPath}/../tmux/sessions/$1.proj \; $2) \
+			|| tmux new-session -s $1 \; source-file ${DOTFILES}/tmux/sessions/$1.proj \; $2) \
 	  || echo 'Usage: tmx setup-name <optional command>'
 }
 
