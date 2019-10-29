@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+#
+# Generates a static bash prompt (for now).
+
+USER = r'\u'
+
+# Build the output command.
+COMPONENTS = (
+    #r'\[\033[1;37;44m\] (' + USER + r') \[\033[m\]' + # Final prompt
+    r'\[\033[1;37;45m\]  λ  \[\033[m\]' + # Special Symbol
+    r'\[\033[1;30;46m\] \w \[\033[m\]' + # Path
+    r' ' # User input entry
+)
+
+# Output everything to stdout.
+print(*COMPONENTS, sep='', end='')

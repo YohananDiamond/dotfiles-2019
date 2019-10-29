@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+
+'''Incomplete. Gotta look at this later.'''
+
+'''import argparse
+
+parser = argparse.ArgumentParser(
+    prog='gg',
+    description='A simple git overview thing.'
+)
+
+commands = parser.add_mutually_exclusive_group()
+commands.add_argument('-s', '--status', metavar=status,
+
+# parser = argume'''

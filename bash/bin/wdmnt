@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [[ $1 == "-m" ]]; then
+    [[ $2 == "" ]] \
+        && echo "wdmnt -m: unnamed mount drive" \
+        || sudo mount -t drvfs "$2"':' "/mnt/$2"
+elif [[ $1 == "-u" ]]; then
+    [[ -z $2 ]] \
+        && echo "wdmnt -u: unnamed mount drive" \
+        || pushd ~ >/dev/null 2>/dev/null && sudo umount "/mnt/$2" && popd >/dev/null 2>/dev/null
+else
+    echo "Usage: wdmnt \'-m | -mu\' drivename"
+fi
