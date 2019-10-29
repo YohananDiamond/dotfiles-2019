@@ -7,8 +7,8 @@ USER = r'\u'
 # Build the output command.
 COMPONENTS = (
     #r'\[\033[1;37;44m\] (' + USER + r') \[\033[m\]' + # Final prompt
-    r'\[\033[1;37;45m\]  λ  \[\033[m\]' + # Special Symbol
-    r'\[\033[1;30;46m\] \w \[\033[m\]' + # Path
+    r'\[\033[48;5;240m\]\[\033[38;5;253m\]  λ  \[\033[m\]' + # Special Symbol
+    r'\[\033[48;5;243m\]\[\033[38;5;237m\] \w \[\033[m\]' + # Path
     r' ' # User input entry
 )
 

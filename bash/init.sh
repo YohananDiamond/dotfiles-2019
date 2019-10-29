@@ -55,33 +55,12 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 # prompt config
 PS1=$(py3 $INITFILES/bin/prompt)
-PS2='\[\033[1;37;45m\] ... \[\033[m\] '
+PS2='\[\033[48;5;240m\]\[\033[38;5;253m\] ... \[\033[m\] '
 
 # PATH ###########################################
 
 pathappend "$HOME/.local/bin"
 pathappend "$INITFILES/bin"
-
-#
-
-# A temporary git thing. Not very easy to use.
-g() {
-    if [[ -n $1 ]]; then
-        for x in $1/*; do
-            echo $'\e[36m' "In repository $x"
-            cd $x
-            git status --short
-            cd ..
-        done
-    else
-        local NUL=0
-        git pull
-        printf "Press ENTER to continue: "
-        read NUL
-        git add .
-        git commit
-    fi
-}
 
 # FIRST LOAD CODE ###############################
 

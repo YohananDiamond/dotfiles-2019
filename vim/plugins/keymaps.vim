@@ -89,24 +89,8 @@ func! keymaps#init()
     nnoremap d "_d
     vnoremap d "_d
 
-    " Use "jj" on insert mode to go back to normal
-    inoremap jj <Esc>
-
-    " Insert literal character sequences that I ended up replacing in insert mode
-    inoremap <C-l>jj jj
-
-    " TODO Make more <C-l> mappings, it looks like a good key
-
-    " Use the ç key (; on english keyboard, but my keyboard is portuguese/brazilian) on normal mode to some interesting actions.
-    " nnoremap çw :w<CR>
-    " nnoremap çd :bd<CR>
-    " nnoremap çld :bd!<CR>
-
-    " Don't move in insert mode! (exercise)
-    " inoremap <silent> <left> <Esc>a
-    " inoremap <silent> <right> <Esc>a
-    " inoremap <silent> <up> <C-p>
-    " inoremap <silent> <down> <C-n>
+    " Use C-j on insert mode to go back to normal
+    inoremap <C-j> <Esc>
 
     " Folding Commands
     nnoremap <silent> <space><right> zO
