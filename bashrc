@@ -2,8 +2,7 @@
 
 # CONSTANTS ######################################
 
-export INITFILES=$(dirname $BASH_SOURCE)
-export DOTFILES=$(dirname $INITFILES)
+export DOTFILES=$(dirname $BASH_SOURCE)
 export COLUMNS # Make all processes know the amount of columns
 
 export PLATFORM="std"
@@ -15,12 +14,14 @@ fi
 
 # HEADER FILES ###################################
 
-. $INITFILES/header.sh
+. $DOTFILES/bash-header.sh
 
 # INIT VARS ######################################
 
 # Bash "first run in session" code
 [[ -z "$FIRST" ]] && FIRST=0
+
+test -r $DOTFILES/dircolors && eval "$(dircolors -b $DOTFILES/dircolors)" || eval "$(dircolors -b)"
 
 # ALIASES ########################################
 
@@ -54,13 +55,13 @@ export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 # prompt config
-PS1=$(py3 $INITFILES/bin/prompt)
+PS1=$(py3 $DOTFILES/bin/prompt)
 PS2='\[\033[48;5;240m\]\[\033[38;5;253m\] ... \[\033[m\] '
 
 # PATH ###########################################
 
 pathappend "$HOME/.local/bin"
-pathappend "$INITFILES/bin"
+pathappend "$DOTFILES/bin"
 
 # FIRST LOAD CODE ###############################
 
