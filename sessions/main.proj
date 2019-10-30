@@ -1,5 +1,5 @@
 # Window 1: Notes
-send-keys 'cd ~/git/orgnz' Enter
+send-keys 'cd ~/git/personal' Enter
 send-keys 'vi' Enter '-'
 
 # Window 2: Free Slot
