@@ -75,6 +75,7 @@ set mouse=a " Enable mouse
 " Commands
 command! -nargs=0 WhitespaceMode set list!
 command! -nargs=0 WrapMode set wrap!
+command! -nargs=0 GitSync !echo "Syncing..." && git pull && git add . && git commit && git push
 
 " Listchars
 set listchars=tab:»\ 
