@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#mergetest2
 
 main() {
     local DOTFILES=$(realpath $(dirname $BASH_SOURCE))
