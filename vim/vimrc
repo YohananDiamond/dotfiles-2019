@@ -23,9 +23,9 @@ if has('gui_running')
     set guioptions=agit
 
     if !isdirectory('C:\')
-        let &guifont='Cascadia Code 10.5,Consolas 12,Monospace 12'
+        let &guifont='Fira Code 10.5,Cascadia Code 10.5,Consolas 12,Monospace 12'
     else
-        let &guifont='Cascadia Code:h10.5,Consolas:h12,monospace:h12'
+        let &guifont='Fira Code:h10.5,Cascadia Code:h10.5,Consolas:h12,monospace:h12'
     endif
 endif
 
@@ -48,13 +48,6 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Editor settings & etc.>
 
-" TODO Make fork of vim-orgmode
-" TODO Move line
-" TODO download python mode & light completer
-" TODO Make a better buffer delete thing and put it on a plugin
-" TODO make a better mapping system that uses \ for Leader (plugins) and ;,<Space> for my custom mappings -- and use functions for that
-" TODO Make my functions for ({[<Backspace><Tab> etc.
-
 syntax on
 set backspace=indent,eol,start
 set laststatus=2 " Enable status bar
@@ -62,7 +55,7 @@ set number " Numbers on the left edge of the screen
 set encoding=utf-8
 set textwidth=0 wrapmargin=0 " Prevent physical linebreak
 set wildmode=longest,list " Bash-like command completion
-set hidden " Prevent quitting vim with 
+set hidden " Prevent quitting vim with :q & etc.
 set autoindent " For keeping the same indentation level on new liens
 set hlsearch incsearch " Highlight & increment
 set virtualedit=
@@ -90,7 +83,6 @@ filetype plugin indent on " Idk what is this but it seems to work.
 " Set color theme
 set background=dark
 colorscheme edge
-"colorscheme plastic
 
 " Autocmds
 autocmd BufNewFile,BufRead,BufEnter *.mq :set filetype=mq 

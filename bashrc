@@ -26,6 +26,7 @@ test -r $DOTFILES/dircolors && eval "$(dircolors -b $DOTFILES/dircolors)" || eva
 # ALIASES ########################################
 
 alias rbash='source $HOME/.bashrc'
+alias ls='ls --color=auto'
 alias la='ls -A $@'
 alias ll='ls -alF $@'
 alias l='ls -CF $@'

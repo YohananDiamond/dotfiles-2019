@@ -3,7 +3,7 @@
 
 func! keymaps#init()
     " Map the leader key to backslash
-    let mapleader = '\'
+    let mapleader = ' '
 
     " Switch between buffers
     nnoremap <silent> <C-x><right> :bn<CR>
@@ -44,16 +44,16 @@ func! keymaps#init()
     map <ScrollWheelDown> <C-D>
 
     " Select all
-    nnoremap <silent> ;a ggVG
-    vnoremap <silent> ;a <Esc>ggVG
+    nnoremap <silent> <space>a ggVG
+    vnoremap <silent> <space>a <Esc>ggVG
 
     " Copy to registers
-    nnoremap <silent> <Space>y "+y
-    nnoremap <silent> <Space>p "+p
-    nnoremap <silent> <Space>x "+x
-    vnoremap <silent> <Space>y "+y
-    vnoremap <silent> <Space>p "+p
-    vnoremap <silent> <Space>x "+x
+    nnoremap <silent> <space>y "+y
+    nnoremap <silent> <space>p "+p
+    nnoremap <silent> <space>x "+x
+    vnoremap <silent> <space>y "+y
+    vnoremap <silent> <space>p "+p
+    vnoremap <silent> <space>x "+x
 
     " Move by graphical, not physical line
     nnoremap <silent> <Up> gk
@@ -72,22 +72,16 @@ func! keymaps#init()
     vnoremap <silent> <S-Tab> <gv
 
     " Plugin-related
-    nnoremap <silent> <C-x>n :NERDTreeToggle<CR>
+    nnoremap <silent> <space>xn :NERDTreeToggle<CR>
 
     " Close split
-    nnoremap <silent> <C-x>0 :close<CR>
-    inoremap <silent> <C-x>0 <C-o>:close<CR>
-    vnoremap <silent> <C-x>0 <Esc>:close<CR>
+    nnoremap <silent> <space>x0 :close<CR>
 
     " Clear search query
-    nnoremap <silent> <Leader>/ :noh<CR>
+    nnoremap <silent> <space>/ :noh<CR>
 
     " Kill buffers
-    nnoremap <silent> <C-x>k :b#<bar>bd#<CR>
-
-    " Actually delete instead of cutting
-    nnoremap d "_d
-    vnoremap d "_d
+    nnoremap <silent> <space>xk :b#<bar>bd#<CR>
 
     " Use C-j on insert mode to go back to normal
     inoremap <C-j> <Esc>
@@ -97,5 +91,9 @@ func! keymaps#init()
     nnoremap <silent> <space><left> zm
     nnoremap <silent> <space>l zO
     nnoremap <silent> <space>h zm
+
+    " Use ç/Ç on normal mode as comma
+    nmap Ç :
+    nmap ç ;
  
 endfunc
