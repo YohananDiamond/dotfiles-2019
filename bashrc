@@ -43,8 +43,15 @@ alias gpp='git pull && git push'
 alias gs='git status --short'
 alias gc='git add . && git commit'
 alias gl='git log --oneline'
+gsa() { for repo in ~/git/*; do pushd $repo; gs; popd &>/dev/null; done; }
 
-# APP THEMING ####################################
+# Directory variables and aliases for them
+NOTES="$HOME/git/personal/notes"
+TODO="$HOME/git/personal/todo"
+REFL="$HOME/git/personal/notes/reference.mq"
+alias vn='vi $NOTES'
+
+# THEMING #######################################
 
 # "less" config
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
