@@ -134,32 +134,40 @@ command! -nargs=0 XReplace call XReplace()
 let mapleader = ' '
 
 " Switch between buffers
-nnoremap <silent> <C-x><right> :bn<CR>
-nnoremap <silent> <C-x><left> :bp<CR>
-inoremap <silent> <C-x><right> <C-o>:bn<CR>
-inoremap <silent> <C-x><left> <C-o>:bp<CR>
-tnoremap <silent> <C-x><right> <C-w>:bn<CR>
-tnoremap <silent> <C-x><left> <C-w>:bp<CR>
-vnoremap <silent> <C-x><right> <Esc>:bn<CR>
-vnoremap <silent> <C-x><left> <Esc>:bp<CR>
+" nnoremap <silent> <C-x><right> :bn<CR>
+" nnoremap <silent> <C-x><left> :bp<CR>
+" inoremap <silent> <C-x><right> <C-o>:bn<CR>
+" inoremap <silent> <C-x><left> <C-o>:bp<CR>
+" tnoremap <silent> <C-x><right> <C-w>:bn<CR>
+" tnoremap <silent> <C-x><left> <C-w>:bp<CR>
+" vnoremap <silent> <C-x><right> <Esc>:bn<CR>
+" vnoremap <silent> <C-x><left> <Esc>:bp<CR>
 nnoremap <silent> <C-x>l :bn<CR>
 nnoremap <silent> <C-x>h :bp<CR>
-inoremap <silent> <C-x>l <C-o>:bn<CR>
-inoremap <silent> <C-x>h <C-o>:bp<CR>
+" inoremap <silent> <C-x>l <C-o>:bn<CR>
+" inoremap <silent> <C-x>h <C-o>:bp<CR>
 tnoremap <silent> <C-x>l <C-w>:bn<CR>
 tnoremap <silent> <C-x>h <C-w>:bp<CR>
-vnoremap <silent> <C-x>l <Esc>:bn<CR>
-vnoremap <silent> <C-x>h <Esc>:bp<CR>
+" vnoremap <silent> <C-x>l <Esc>:bn<CR>
+" vnoremap <silent> <C-x>h <Esc>:bp<CR>
+nnoremap <silent> <C-x>j :bn<CR>
+nnoremap <silent> <C-x>k :bp<CR>
+" inoremap <silent> <C-x>j <C-o>:bn<CR>
+" inoremap <silent> <C-x>k <C-o>:bp<CR>
+tnoremap <silent> <C-x>j <C-w>:bn<CR>
+tnoremap <silent> <C-x>k <C-w>:bp<CR>
+" vnoremap <silent> <C-x>j <Esc>:bn<CR>
+" vnoremap <silent> <C-x>k <Esc>:bp<CR>
 
 " Switch between tabs
-nnoremap <silent> <C-x>o :tabn<CR>
-nnoremap <silent> <C-x>k :tabp<CR>
-inoremap <silent> <C-x>o <C-o>:tabn<CR>
-inoremap <silent> <C-x>k <C-o>:tabp<CR>
-tnoremap <silent> <C-x>o <C-w>:tabn<CR>
-tnoremap <silent> <C-x>k <C-w>:tabp<CR>
-vnoremap <silent> <C-x>o <Esc>:tabn<CR>
-vnoremap <silent> <C-x>k <Esc>:tabp<CR>
+" nnoremap <silent> <C-x>o :tabn<CR>
+" nnoremap <silent> <C-x>k :tabp<CR>
+" inoremap <silent> <C-x>o <C-o>:tabn<CR>
+" inoremap <silent> <C-x>k <C-o>:tabp<CR>
+" tnoremap <silent> <C-x>o <C-w>:tabn<CR>
+" tnoremap <silent> <C-x>k <C-w>:tabp<CR>
+" vnoremap <silent> <C-x>o <Esc>:tabn<CR>
+" vnoremap <silent> <C-x>k <Esc>:tabp<CR>
 
 " Mouse Wheel Scrolling
 map <ScrollWheelUp> <C-U>

@@ -1,12 +1,3 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =1
-let g:netrw_dirhist_1='/storage/emulated/0/_MyStuff/git/orgnz'
-let g:netrw_dirhist_0='/storage/emulated/0/_MyStuff/git/orgnz/code'
-let g:netrw_dirhist_9='/storage/emulated/0/_MyStuff/git/orgnz'
-let g:netrw_dirhist_8='/data/data/com.termux/files/home/c-test'
-let g:netrw_dirhist_7='/storage/emulated/0/_MyStuff/git/orgnz/code/c-test'
-let g:netrw_dirhist_6='/storage/emulated/0/_MyStuff/git/orgnz/code'
-let g:netrw_dirhist_5='/storage/emulated/0/_MyStuff/git/orgnz/code/py-ascmat'
-let g:netrw_dirhist_4='/storage/emulated/0/_MyStuff/git/orgnz/code'
-let g:netrw_dirhist_3='/storage/emulated/0/_MyStuff/git/orgnz'
-let g:netrw_dirhist_2='/storage/emulated/0/_MyStuff/git/orgnz/school'
+let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_1='/home/yohanan/git/personal/school/2019U3/socl'

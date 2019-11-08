@@ -62,8 +62,9 @@ export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
-# prompt config
-PS1=$(py3 $DOTFILES/bin/prompt)
+# "prompt" config
+# I'm experiencing a bug where I have an error because of this line when logging in on Ubuntu. I'm taking a look at it.
+PS1=$(python3 $DOTFILES/bin/prompt)
 PS2='\[\033[48;5;240m\]\[\033[38;5;253m\] ... \[\033[m\] '
 
 # PATH ###########################################
