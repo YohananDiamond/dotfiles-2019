@@ -11,10 +11,10 @@
     "editor.detectIndentation": true,
     "editor.minimap.renderCharacters": false,
     "editor.copyWithSyntaxHighlighting": false,
-    "editor.fontFamily": "'Cascadia Code', 'Droid Sans Mono', Consolas, 'Courier New', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontFamily": "'Fira Code', 'Cascadia Code', 'Droid Sans Mono', Consolas, 'Courier New', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.fontWeight": "800",
     "editor.fontLigatures": true,
-    "editor.fontSize": 13.7,
+    "editor.fontSize": 13,
     "zenMode.hideTabs": false,
     "zenMode.hideLineNumbers": false,
 
@@ -44,25 +44,17 @@
   "vim.useCtrlKeys": false,
   "vim.hlsearch": true,
   "vim.leader": "<space>",
-  "vim.insertModeKeyBindings": [
-    {
-      "before": ["j", "j"],
-      "after": ["<Esc>"]
-    }
-  ],
   "vim.visualModeKeyBindingsNonRecursive": [
     { "before": ["<leader>", "p"], "commands": ["editor.action.clipboardPasteAction"] },
     { "before": ["<leader>", "x"], "commands": ["editor.action.clipboardCutAction"] },
     { "before": ["<leader>", "y"], "commands": ["editor.action.clipboardCopyAction"] }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
-    /*{ "before": ["<tab>"], "after": [">", ">"] },*/ // Removed because its equivalent (<S-Tab>) is not working yet.
     { "before": ["<leader>", "p"], "commands": ["editor.action.clipboardPasteAction"] },
     { "before": ["<leader>", "x"], "commands": ["editor.action.clipboardCutAction"] },
     { "before": ["<leader>", "y"], "commands": ["editor.action.clipboardCopyAction"] },
-    { "before": ["J"], "commands": [":$"] },
-    { "before": ["K"], "commands": [":0"] },
-    { "before": ["<leader>", "<space>"], "commands": ["editor.toggleFold"] }
+    { "before": ["<leader>", "o"], "commands": ["editor.toggleFold"] },
+    { "before": ["Ç"], "after": [":"] }
   ],
   "vim.handleKeys": {
       "<C-a>": false,
@@ -81,5 +73,4 @@
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
     "window.zoomLevel": 0,
-    //"terminal.integrated.shellArgs.linux": ["-c", "tmux attach-session -t vscode"]
 }

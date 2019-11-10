@@ -23,15 +23,10 @@ if has('gui_running')
     set guioptions=agit
 
     if !isdirectory('C:\')
-        let &guifont='Fira Code 10.5,Cascadia Code 10.5,Consolas 12,Monospace 12'
+        let &guifont='Fixedsys 9,Ubuntu Mono 12,Fira Code 10.5,Cascadia Code 10.5,Consolas 12,Monospace 12'
     else
-        let &guifont='Fira Code:h10.5,Cascadia Code:h10.5,Consolas:h12,monospace:h12'
+        let &guifont='Ubuntu Mono:h12.5,Fira Code:h10.5,Cascadia Code:h10.5,Consolas:h12,monospace:h12'
     endif
-endif
-
-" Python
-if has('python3')
-    let g:deoplete#enable_at_startup = 1
 endif
 
 " Set status line settings (when not using lightline)
@@ -82,7 +77,7 @@ filetype plugin indent on " Idk what is this but it seems to work.
 
 " Set color theme
 set background=dark
-colorscheme edge
+colorscheme gruvbox
 
 " Autocmds
 autocmd BufNewFile,BufRead,BufEnter *.mq :set filetype=mq 
@@ -134,40 +129,14 @@ command! -nargs=0 XReplace call XReplace()
 let mapleader = ' '
 
 " Switch between buffers
-" nnoremap <silent> <C-x><right> :bn<CR>
-" nnoremap <silent> <C-x><left> :bp<CR>
-" inoremap <silent> <C-x><right> <C-o>:bn<CR>
-" inoremap <silent> <C-x><left> <C-o>:bp<CR>
-" tnoremap <silent> <C-x><right> <C-w>:bn<CR>
-" tnoremap <silent> <C-x><left> <C-w>:bp<CR>
-" vnoremap <silent> <C-x><right> <Esc>:bn<CR>
-" vnoremap <silent> <C-x><left> <Esc>:bp<CR>
-nnoremap <silent> <C-x>l :bn<CR>
-nnoremap <silent> <C-x>h :bp<CR>
-" inoremap <silent> <C-x>l <C-o>:bn<CR>
-" inoremap <silent> <C-x>h <C-o>:bp<CR>
-tnoremap <silent> <C-x>l <C-w>:bn<CR>
-tnoremap <silent> <C-x>h <C-w>:bp<CR>
-" vnoremap <silent> <C-x>l <Esc>:bn<CR>
-" vnoremap <silent> <C-x>h <Esc>:bp<CR>
 nnoremap <silent> <C-x>j :bn<CR>
 nnoremap <silent> <C-x>k :bp<CR>
-" inoremap <silent> <C-x>j <C-o>:bn<CR>
-" inoremap <silent> <C-x>k <C-o>:bp<CR>
 tnoremap <silent> <C-x>j <C-w>:bn<CR>
 tnoremap <silent> <C-x>k <C-w>:bp<CR>
-" vnoremap <silent> <C-x>j <Esc>:bn<CR>
-" vnoremap <silent> <C-x>k <Esc>:bp<CR>
-
-" Switch between tabs
-" nnoremap <silent> <C-x>o :tabn<CR>
-" nnoremap <silent> <C-x>k :tabp<CR>
-" inoremap <silent> <C-x>o <C-o>:tabn<CR>
-" inoremap <silent> <C-x>k <C-o>:tabp<CR>
-" tnoremap <silent> <C-x>o <C-w>:tabn<CR>
-" tnoremap <silent> <C-x>k <C-w>:tabp<CR>
-" vnoremap <silent> <C-x>o <Esc>:tabn<CR>
-" vnoremap <silent> <C-x>k <Esc>:tabp<CR>
+nnoremap <silent> <C-x><Down> :bn<CR>
+nnoremap <silent> <C-x><Up> :bp<CR>
+tnoremap <silent> <C-x><Down> <C-w>:bn<CR>
+tnoremap <silent> <C-x><Up> <C-w>:bp<CR>
 
 " Mouse Wheel Scrolling
 map <ScrollWheelUp> <C-U>
@@ -186,14 +155,14 @@ vnoremap <silent> <space>p "+p
 vnoremap <silent> <space>x "+x
 
 " Move by graphical, not physical line
-nnoremap <silent> <Up> gk
-nnoremap <silent> <Down> gj
-vnoremap <silent> <Up> gk
-vnoremap <silent> <Down> gj
-nnoremap <silent> <End> g<End>
-nnoremap <silent> <Home> g<Home>
-vnoremap <silent> <End> g<End>
-vnoremap <silent> <Home> g<Home>
+" nnoremap <silent> <Up> gk
+" nnoremap <silent> <Down> gj
+" vnoremap <silent> <Up> gk
+" vnoremap <silent> <Down> gj
+" nnoremap <silent> <End> g<End>
+" nnoremap <silent> <Home> g<Home>
+" vnoremap <silent> <End> g<End>
+" vnoremap <silent> <Home> g<Home>
 
 " Indentation Management
 nnoremap <silent> <Tab> >>
@@ -202,19 +171,16 @@ vnoremap <silent> <Tab> >gv
 vnoremap <silent> <S-Tab> <gv
 
 " Plugin-related
-nnoremap <silent> <space>xn :NERDTreeToggle<CR>
+nnoremap <silent> <C-x>n :NERDTreeToggle<CR>
 
-" Close split
-nnoremap <silent> <space>x0 :close<CR>
+" Close windows
+nnoremap <silent> <C-x>0 :close<CR>
 
 " Clear search query
 nnoremap <silent> <space>/ :noh<CR>
 
 " Kill buffers
-nnoremap <silent> <space>xk :b#<bar>bd#<CR>
-
-" Use C-l on insert mode to go back to normal
-inoremap <C-l> <Esc>
+nnoremap <silent> <C-x>k :b#<bar>bd#<CR>
 
 " Folding Commands
 nnoremap <silent> <space><right> zO
@@ -222,7 +188,7 @@ nnoremap <silent> <space><left> zm
 nnoremap <silent> <space>l zO
 nnoremap <silent> <space>h zm
 
-" Use ç/Ç on normal mode as comma
+" Use ç/Ç (from Portuguese/Brazilian keyboard) on normal mode for :
 nmap Ç :
 nmap ç ;
 

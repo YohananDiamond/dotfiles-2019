@@ -27,12 +27,12 @@ test -r $DOTFILES/dircolors && eval "$(dircolors -b $DOTFILES/dircolors)" || eva
 
 alias rbash='source $HOME/.bashrc'
 alias ls='ls --color=auto'
-alias la='ls -A $@'
-alias ll='ls -alF $@'
-alias l='ls -CF $@'
+alias la='ls -A'
+alias ll='ls -alF'
+alias l='ls -CF'
 alias cl='cd $@ && la'
-alias py3='python3 $@'
-alias ipy3='ipython $@'
+alias py3='python3' 
+alias ipy3='ipython'
 alias du='du -shc'
 alias rscp='rsync -aP'
 alias rsmv='rsync -aP --remove-source-files'
@@ -64,8 +64,8 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 # "prompt" config
 # I'm experiencing a bug where I have an error because of this line when logging in on Ubuntu. I'm taking a look at it.
-PS1=$(python3 $DOTFILES/bin/prompt)
-PS2='\[\033[48;5;240m\]\[\033[38;5;253m\] ... \[\033[m\] '
+export PS1=$(python3 $DOTFILES/bin/prompt 1)
+export PS2=$(python3 $DOTFILES/bin/prompt 2)
 
 # PATH ###########################################
 
@@ -79,6 +79,7 @@ if [[ $FIRST == 0 ]]; then
     FIRST=1
 
     # Start the "back" and "main" tmux sessions.
+    [[ -t 1 ]] && \ # Check if the program is running on a terminal.
     [[ -z "$TMUX" ]] && [[ $PWD == $HOME ]] \
         && tmx back detach && tmx main
 
