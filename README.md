@@ -10,7 +10,11 @@ Most of my dotfiles are categorized in these directories:
 
 While this is open for everyone to access, I don't recommend simply copying these files.
 I believe it's better for you to only get what you need from these files and slowly add what you *want* and *understand* to your own setup.
-But if you want to use it or simply take a look on how it works:
+
+Also, there usually are a lot of frequent and unstable commits, since I use git and GitHub themselves to sync with my phone.
+I might use branches to help on this later, but I haven't learned that yet.
+
+But if you want to use it anyways or simply take a look on how it works:
 
 ```
 ./install.sh
