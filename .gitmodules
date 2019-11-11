@@ -1,36 +1,36 @@
-[submodule "vim/autoload/vim-pathogen"]
-	path = vim/autoload/vim-pathogen
+[submodule "home/.vim/autoload/vim-pathogen"]
+	path = home/.vim/autoload/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
-[submodule "vim/bundle/edge"]
-	path = vim/bundle/edge
+[submodule "home/.vim/bundle/edge"]
+	path = home/.vim/bundle/edge
 	url = https://github.com/sainnhe/edge
-[submodule "vim/bundle/vim-vinegar"]
-	path = vim/bundle/vim-vinegar
+[submodule "home/.vim/bundle/vim-vinegar"]
+	path = home/.vim/bundle/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar
-[submodule "vim/bundle/vim-buftabline"]
-	path = vim/bundle/vim-buftabline
+[submodule "home/.vim/bundle/vim-buftabline"]
+	path = home/.vim/bundle/vim-buftabline
 	url = https://github.com/ap/vim-buftabline
-[submodule "vim/bundle/jsonc.vim"]
-	path = vim/bundle/jsonc.vim
+[submodule "home/.vim/bundle/jsonc.vim"]
+	path = home/.vim/bundle/jsonc.vim
 	url = https://github.com/neoclide/jsonc.vim
-[submodule "vim/bundle/vim-commentary"]
-	path = vim/bundle/vim-commentary
+[submodule "home/.vim/bundle/vim-commentary"]
+	path = home/.vim/bundle/vim-commentary
 	url = https://github.com/tpope/vim-commentary
-[submodule "vim/bundle/lightline.vim"]
-	path = vim/bundle/lightline.vim
+[submodule "home/.vim/bundle/lightline.vim"]
+	path = home/.vim/bundle/lightline.vim
 	url = https://github.com/itchyny/lightline.vim
-[submodule "vim/bundle/vim-abolish"]
-	path = vim/bundle/vim-abolish
+[submodule "home/.vim/bundle/vim-abolish"]
+	path = home/.vim/bundle/vim-abolish
 	url = https://github.com/tpope/vim-abolish
-[submodule "vim/bundle/--force"]
-	path = vim/bundle/--force
+[submodule "home/.vim/bundle/--force"]
+	path = home/.vim/bundle/--force
 	url = https://github.com/ajh17/VimCompletesMe
-[submodule "vim/bundle/nerdtree"]
-	path = vim/bundle/nerdtree
+[submodule "home/.vim/bundle/nerdtree"]
+	path = home/.vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree
-[submodule "vim/bundle/SimpylFold"]
-	path = vim/bundle/SimpylFold
+[submodule "home/.vim/bundle/SimpylFold"]
+	path = home/.vim/bundle/SimpylFold
 	url = https://github.com/tmhedberg/SimpylFold
-[submodule "vim/bundle/gruvbox"]
-	path = vim/bundle/gruvbox
+[submodule "home/.vim/bundle/gruvbox"]
+	path = home/.vim/bundle/gruvbox
 	url = https://github.com/morhetz/gruvbox
