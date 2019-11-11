@@ -1,3 +1,0 @@
-# Window 1: Python3
-rename-window "python3"
-send-keys 'python3' Enter 'C-l'

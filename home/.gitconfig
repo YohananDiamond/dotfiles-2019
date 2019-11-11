@@ -1,0 +1,51 @@
+[color]
+    ui = auto
+
+[color "diff"]
+    meta = white bold
+    frag = cyan bold
+    old = red bold
+    new = green bold
+
+[core]
+    editor = vim
+    excludesfile = ~/.gitignore
+    attributesfile = ~/.gitattributes
+    ignorecase = false
+
+[alias]
+
+    a = add
+    c = commit
+    ac = !git add . && git commit
+    cm = commit -m
+    pp = !git pull && git push
+    s = status -sb
+    b = branch
+
+    # When doing "git git log" or some such, do not complain about "git"
+    git = !git
+
+    # Pretty commits log
+    l = log --all --graph --decorate --oneline
+
+    # Fully commits log with statistic
+    ll = log --stat --abbrev-commit
+
+    # Ignore files: append file to .ginignore
+    ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo `\n$2` >> .gitignore
+
+    # Initialize, add all files and commit
+    this = !git init && git add . && git commit -m 'Initial commit'
+
+    # List of contributors and how many commits each person has.
+    contrib = shortlog -sn
+
+[diff]
+	tool = vimdiff
+
+[merge]
+    tool = vimdiff
+
+[include]
+    path = ~/.gitlocal

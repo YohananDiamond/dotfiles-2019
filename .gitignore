@@ -1,2 +1,2 @@
-*.swp
-*.swo
+# The backup folder.
+.backup

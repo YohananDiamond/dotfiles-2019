@@ -4,9 +4,6 @@
 [submodule "vim/bundle/edge"]
 	path = vim/bundle/edge
 	url = https://github.com/sainnhe/edge
-[submodule "vim/bundle/plastic.vim"]
-	path = vim/bundle/plastic.vim
-	url = https://github.com/flrnprz/plastic.vim
 [submodule "vim/bundle/vim-vinegar"]
 	path = vim/bundle/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar
@@ -34,24 +31,6 @@
 [submodule "vim/bundle/SimpylFold"]
 	path = vim/bundle/SimpylFold
 	url = https://github.com/tmhedberg/SimpylFold
-[submodule "vim/bundle/vim-rainbow-parentheses"]
-	path = vim/bundle/vim-rainbow-parentheses
-	url = https://github.com/dbarsam/vim-rainbow-parentheses
-[submodule "vim/bundle/vim-odyssey"]
-	path = vim/bundle/vim-odyssey
-	url = https://github.com/ludokng/vim-odyssey
-[submodule "vim/bundle/duo-mini"]
-	path = vim/bundle/duo-mini
-	url = https://github.com/seesleestak/duo-mini
-[submodule "vim/bundle/tender.vim"]
-	path = vim/bundle/tender.vim
-	url = https://github.com/jacoborus/tender.vim
-[submodule "vim/bundle/onehalf"]
-	path = vim/bundle/onehalf
-	url = https://github.com/sonph/onehalf
 [submodule "vim/bundle/gruvbox"]
 	path = vim/bundle/gruvbox
 	url = https://github.com/morhetz/gruvbox
-[submodule "vim/bundle/lightline-gruvbox.vim"]
-	path = vim/bundle/lightline-gruvbox.vim
-	url = https://github.com/shinchu/lightline-gruvbox.vim

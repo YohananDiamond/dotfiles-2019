@@ -1,4 +1,0 @@
-fallenwood.vimL
-ms-python.python
-ms-vscode.cpptools
-vscodevim.vim
