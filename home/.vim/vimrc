@@ -84,10 +84,8 @@ colorscheme gruvbox
 autocmd BufNewFile,BufRead,BufEnter *.mq :set filetype=mq 
 autocmd FileType mq :call OptSpaceIndentation(2) 
 autocmd FileType tq :call OptSpaceIndentation(2) 
+autocmd FileType mq :set syntax=markdown
 autocmd FileType python setlocal nosmartindent
-" autocmd FileType mq :nnoremap <buffer><silent> <Leader>c I\# <esc>A #/<esc>
-" autocmd FileType python :nnoremap <buffer><silent> <Leader>c I#<esc>
-" autocmd FileType vim :nnoremap <buffer><silent> <Leader>c I"<esc>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Option Functions>
