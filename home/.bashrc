@@ -31,7 +31,7 @@ test -r $DOTFILES/dircolors && eval "$(dircolors -b $DOTFILES/dircolors)" || eva
 
 # ALIASES & FUNCTIONS ############################
 
-alias rbash='source $HOME/.bashrc'
+alias rebash='source $HOME/.bashrc'
 alias ls='ls --color=auto'
 alias la='ls -A'
 alias ll='ls -alF'
@@ -44,10 +44,6 @@ alias rcp='rsync -aP'
 alias rmv='rsync -aP --remove-source-files'
 
 # Git-related
-# alias gpp='git pull && git push'
-# alias gs='git status --short'
-# alias gc='git add . && git commit'
-# alias gl='git log --oneline'
 gsa() { for repo in ~/git/*; do pushd $repo; git s; popd &>/dev/null; done; }
 
 # Directory variables and aliases for them
