@@ -21,6 +21,12 @@ fi
 # HEADER FILES ###################################
 
 . $DOTFILES/lib/bash-header.sh
+. $DOTFILES/lib/bash-std.sh
+
+if [[ -f ~/git/personal/lib/bash-pv.sh ]]; then 
+    # Personal Scripts that I can't show here
+    . ~/git/personal/lib/bash-pv.sh
+fi
 
 # INIT VARS ######################################
 
