@@ -114,8 +114,8 @@ if [[ $FIRST == 0 ]]; then
         [[ -z "$TMUX" ]] && [[ $PWD == $HOME ]] \
             && tmx back detach && tmx main
 
-        # Set up fzf.
-        source /usr/share/doc/fzf/examples/key-bindings.bash
+        # Set up fzf
+        [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
     fi
 
