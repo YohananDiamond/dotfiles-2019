@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# TODO: Make something really interesting here:
+# Main Menu
+# Window Switcher (idk if it's possible)
+# File Finder -> Menu Option
+# Terminal Command -> Run Directly into Terminal Instance
+
+compgen -c | fzf

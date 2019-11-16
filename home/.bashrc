@@ -53,10 +53,18 @@ alias rmv='rsync -aP --remove-source-files'
 gsa() { for repo in ~/git/*; do pushd $repo; git s; popd &>/dev/null; done; }
 
 # Directory variables and aliases for them
-NOTES="$HOME/git/personal/notes"
-TODO="$HOME/git/personal/todo"
-REFL="$HOME/git/personal/notes/reference.mq"
-alias vn='vi $NOTES'
+export NOTES="$HOME/git/personal/notes"
+export TODO="$HOME/git/personal/todo"
+export REFL="$HOME/git/personal/notes/reference.mq"
+alias vp="(cd $HOME/git/personal && vi)"
+alias ctd='grep --exclude-dir=.git -rEI "TODO|FIXME" . 2>/dev/null'
+alias cnt='grep --exclude-dir=.git -rEI "NOTE" . 2>/dev/null'
+
+# SETTINGS ######################################
+
+# Larger History
+export HISTSIZE=1000000
+export HISTFILESIZE=1000000000
 
 # THEMING #######################################
 
@@ -99,10 +107,17 @@ if [[ $FIRST == 0 ]]; then
 
     FIRST=1
 
-    # Start the "back" and "main" tmux sessions.
-    # And also check if the program is running on a terminal.
-    [[ -t 1 ]] && \
-    [[ -z "$TMUX" ]] && [[ $PWD == $HOME ]] \
-        && tmx back detach && tmx main
+    # Check if bash is running on interactive mode (graphically / on a terminal).
+    if [[ -t 1 ]]; then
+
+        # Start the "back" and "main" tmux sessions.
+        [[ -z "$TMUX" ]] && [[ $PWD == $HOME ]] \
+            && tmx back detach && tmx main
+
+        # Set up fzf
+        [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
+
+    fi
 
 fi
+

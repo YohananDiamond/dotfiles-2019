@@ -1,0 +1,4 @@
+rofi.theme: android_notification
+rofi.width: 800
+rofi.lines: 20
+rofi.scroll-method: 1

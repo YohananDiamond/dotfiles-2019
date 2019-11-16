@@ -64,7 +64,8 @@ set showcmd
 " Commands
 command! -nargs=0 WhitespaceMode set list!
 command! -nargs=0 WrapMode set wrap!
-command! -nargs=0 GitSync !echo "Syncing..." && git pull && git add . && git commit && git push
+command! -nargs=0 W w
+command! -nargs=0 GitSync !echo "Syncing..." && git ac && git pp
 
 " Listchars
 set listchars=tab:»\ 
@@ -125,11 +126,13 @@ endfunc
 command! -nargs=0 XReplace call XReplace()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" <Keymappings>
+" <Mapping>
 
-let mapleader = ' '
+" Map <Space> to <Leader> on a (kinda) better way
+" 
+nmap <Space> <Leader>
 
-" Keystroke sequence delays (?)
+" Remove <Esc> delays
 set timeoutlen=1000 ttimeoutlen=0
 
 " Switch between buffers
@@ -147,16 +150,18 @@ map <ScrollWheelUp> <C-U>
 map <ScrollWheelDown> <C-D>
 
 " Select all
-nnoremap <silent> <space>a ggVG
-vnoremap <silent> <space>a <Esc>ggVG
+nnoremap <silent> <Leader>a ggVG
+vnoremap <silent> <Leader>a <Esc>ggVG
 
 " Copy to registers
-nnoremap <silent> <space>y "+y
-nnoremap <silent> <space>p "+p
-nnoremap <silent> <space>x "+x
-vnoremap <silent> <space>y "+y
-vnoremap <silent> <space>p "+p
-vnoremap <silent> <space>x "+x
+nnoremap <silent> <Leader>y "+y
+nnoremap <silent> <Leader>p "+p
+nnoremap <silent> <Leader>x "+x
+nnoremap <silent> <Leader>d "+d
+vnoremap <silent> <Leader>y "+y
+vnoremap <silent> <Leader>p "+p
+vnoremap <silent> <Leader>x "+x
+vnoremap <silent> <Leader>d "+d
 
 " Move by graphical, not physical line
 " nnoremap <silent> <Up> gk
@@ -173,25 +178,34 @@ nnoremap <silent> <Tab> >>
 nnoremap <silent> <S-Tab> <<
 vnoremap <silent> <Tab> >gv
 vnoremap <silent> <S-Tab> <gv
+inoremap <silent> <S-Tab> <C-o>:exec 'normal '.&tabstop.'X'<CR>
 
-" Plugin-related
-nnoremap <silent> <C-x>n :NERDTreeToggle<CR>
+" Toggle NERDTree
+nnoremap <silent> <C-C>o :NERDTreeToggle<CR>
 
 " Close windows
 nnoremap <silent> <C-x>0 :close<CR>
 
 " Clear search query
-nnoremap <silent> <space>/ :noh<CR>
+nnoremap <silent> <Leader>/ :noh<CR>
 
 " Folding Commands
-nnoremap <silent> <space><right> zO
-nnoremap <silent> <space><left> zm
-nnoremap <silent> <space>l zO
-nnoremap <silent> <space>h zm
+" nnoremap <silent> <Leader><right> zO
+" nnoremap <silent> <Leader><left> zm
+" nnoremap <silent> <Leader>l zO
+" nnoremap <silent> <Leader>h zm
 
 " Use ç/Ç (from Portuguese/Brazilian keyboard) on normal mode for :
 nmap Ç :
 nmap ç ;
+
+" Some complex commands; I'm still testing them.
+nnoremap <silent> <Leader>d*t ggdG
+
+" Open files, MRU and ALL on CtrlP with a slightly different mapping (see <Plugin Settings> section)
+nnoremap <silent> <C-o> :CtrlP<CR>
+nnoremap <silent> <C-c>0 :CtrlPMRU<CR>
+nnoremap <silent> <C-c>p :CtrlPMixed<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Plugin Settings>
@@ -205,3 +219,6 @@ let g:lightline = {
 
 " Space Indentation
 call OptSpaceIndentation(4)
+
+" CtrlP
+let g:ctrlp_cmd = 'CtrlPBuffer'

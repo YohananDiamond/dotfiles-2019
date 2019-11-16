@@ -11,6 +11,21 @@ from pathlib import Path
 # Make a lambda for creating expanded path objects
 _path = lambda dest: Path(dest).expanduser()
 
+def main():
+
+    # Process arguments from command line
+    # args = (source, destination, backup)
+    args = tuple(sys.argv[1:]) if len(sys.argv) > 1 else ()
+
+    # Create main variables
+    DOTFILES = _path(__file__).absolute().parents[0]
+    SOURCE_DIR = _path(args[0] if len(args) >= 1 else (DOTFILES / 'home'))
+    DEST_DIR = _path(args[1] if len(args) >= 2 else '~')
+    BACKUP_DIR = _path(args[2] if len(args) >= 3 else (DOTFILES / '.backup' / (datetime.datetime.now().strftime('%Y%m%d-%H.%M'))))
+
+    # Symlink all files
+    symlink_all_files(SOURCE_DIR, DEST_DIR, BACKUP_DIR)
+
 def force_remove(path):
     """Forces the removal of a directory, symlink or file."""
     if path.is_dir() and (not path.is_symlink()):
@@ -99,21 +114,6 @@ def symlink_all_files(source_dir, dest_dir, backup_dir):
     for file in vscode_files:
         _path('~/.config/Code/User').mkdir(parents=True, exist_ok=True)
         symlink_file(file, _path(source_dir) / '..' / 'vscode', _path('~/.config/Code/User'), backup_dir, options_dict=options)
-
-def main():
-
-    # Process arguments from command line
-    # args = (source, destination, backup)
-    args = tuple(sys.argv[1:]) if len(sys.argv) > 1 else ()
-
-    # Create main variables
-    DOTFILES = _path(__file__).absolute().parents[0]
-    SOURCE_DIR = _path(args[0] if len(args) >= 1 else (DOTFILES / 'home'))
-    DEST_DIR = _path(args[1] if len(args) >= 2 else '~')
-    BACKUP_DIR = _path(args[2] if len(args) >= 3 else (DOTFILES / '.backup' / (datetime.datetime.now().strftime('%Y%m%d-%H:%M'))))
-
-    # Symlink all files
-    symlink_all_files(SOURCE_DIR, DEST_DIR, BACKUP_DIR)
 
 if __name__ == '__main__':
     try: main()
