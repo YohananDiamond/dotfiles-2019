@@ -114,8 +114,11 @@ if [[ $FIRST == 0 ]]; then
         [[ -z "$TMUX" ]] && [[ $PWD == $HOME ]] \
             && tmx back detach && tmx main
 
-        # Set up fzf
-        [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
+        # Set up fzf (lazy-coded)
+        if ! [[ -r ~/.fzf ]]; then
+            git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+        fi
+        [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash || source /usr/share/doc/fzf/examples/key-bindings.bash
 
     fi
 
