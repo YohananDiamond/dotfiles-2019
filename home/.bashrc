@@ -60,6 +60,13 @@ alias vp="(cd $HOME/git/personal && vi)"
 alias ctd='grep --exclude-dir=.git -rEI "TODO|FIXME" . 2>/dev/null'
 alias cnt='grep --exclude-dir=.git -rEI "NOTE" . 2>/dev/null'
 
+# Open files
+if [[ ${PLATFORM} == "termux" ]]; then
+    alias open='termux-open'
+else
+    alias open='xdg-open'
+fi
+
 # SETTINGS ######################################
 
 # Larger History

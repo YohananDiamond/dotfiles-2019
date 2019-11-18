@@ -5,5 +5,10 @@
 # Window Switcher (idk if it's possible)
 # File Finder -> Menu Option
 # Terminal Command -> Run Directly into Terminal Instance
+# TODO: make it usable with rofi and fzf
 
-compgen -c | fzf
+# Select the engine where the application will run.
+_COMMAND='rofi -dmenu'
+# _COMMAND='fzf'
+
+compgen -c | ${_COMMAND}

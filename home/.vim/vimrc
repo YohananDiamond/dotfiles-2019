@@ -22,10 +22,10 @@ command! -nargs=0 Reload
 if has('gui_running')
     set guioptions=agit
 
-    if !isdirectory('C:\')
+    if isdirectory('C:\')
         let &guifont='Fixedsys 9,Ubuntu Mono 12,Fira Code 10.5,Cascadia Code 10.5,Consolas 12,Monospace 12'
     else
-        let &guifont='Ubuntu Mono:h12.5,Fira Code:h10.5,Cascadia Code:h10.5,Consolas:h12,monospace:h12'
+        let &guifont='Ubuntu Mono 12,Fira Code 10.5,Cascadia Code 10.5,Consolas 12,Monospace 12'
     endif
 endif
 
@@ -82,10 +82,9 @@ set background=dark
 colorscheme gruvbox
 
 " Autocmds
-autocmd BufNewFile,BufRead,BufEnter *.mq :set filetype=mq 
-autocmd FileType mq :call OptSpaceIndentation(2) 
-autocmd FileType tq :call OptSpaceIndentation(2) 
-autocmd FileType mq :set syntax=markdown
+autocmd BufNewFile,BufRead,BufEnter *.tq :set filetype=todoq
+autocmd FileType todoq :call OptSpaceIndentation(2)
+autocmd FileType todoq :set foldmethod=indent
 autocmd FileType python setlocal nosmartindent
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -103,8 +102,8 @@ func! OptSpaceIndentation(size)
 	let &tabstop=a:size
 	let &shiftwidth=a:size
 	set expandtab
-	" set softtabstop=0
-	" set smarttab
+	set softtabstop=0
+	set smarttab
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -163,16 +162,6 @@ vnoremap <silent> <Leader>p "+p
 vnoremap <silent> <Leader>x "+x
 vnoremap <silent> <Leader>d "+d
 
-" Move by graphical, not physical line
-" nnoremap <silent> <Up> gk
-" nnoremap <silent> <Down> gj
-" vnoremap <silent> <Up> gk
-" vnoremap <silent> <Down> gj
-" nnoremap <silent> <End> g<End>
-" nnoremap <silent> <Home> g<Home>
-" vnoremap <silent> <End> g<End>
-" vnoremap <silent> <Home> g<Home>
-
 " Indentation Management
 nnoremap <silent> <Tab> >>
 nnoremap <silent> <S-Tab> <<
@@ -189,12 +178,6 @@ nnoremap <silent> <C-x>0 :close<CR>
 " Clear search query
 nnoremap <silent> <Leader>/ :noh<CR>
 
-" Folding Commands
-" nnoremap <silent> <Leader><right> zO
-" nnoremap <silent> <Leader><left> zm
-" nnoremap <silent> <Leader>l zO
-" nnoremap <silent> <Leader>h zm
-
 " Use ç/Ç (from Portuguese/Brazilian keyboard) on normal mode for :
 nmap Ç :
 nmap ç ;
@@ -206,6 +189,14 @@ nnoremap <silent> <Leader>d*t ggdG
 nnoremap <silent> <C-o> :CtrlP<CR>
 nnoremap <silent> <C-c>0 :CtrlPMRU<CR>
 nnoremap <silent> <C-c>p :CtrlPMixed<CR>
+
+" Folding Commands
+nnoremap <silent> <Leader>o zA
+nnoremap <silent> <Leader>m zm
+
+" Add a new task (todoq format) to the end of the line.
+" Yeah. I need to move this into a plugin. I'll do it later.
+nnoremap <silent> <Leader>dn Go<C-o>0- [ ] <C-r>=strftime('%F')<CR> 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Plugin Settings>
