@@ -130,6 +130,7 @@ command! -nargs=0 XReplace call XReplace()
 " Map <Space> to <Leader> on a (kinda) better way
 " 
 nmap <Space> <Leader>
+vmap <Space> <Leader>
 
 " Remove <Esc> delays
 set timeoutlen=1000 ttimeoutlen=0
