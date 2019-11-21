@@ -83,7 +83,7 @@ colorscheme gruvbox
 
 " Autocmds
 autocmd BufNewFile,BufRead,BufEnter *.tq :set filetype=todoq
-autocmd FileType todoq :call OptSpaceIndentation(2)
+autocmd FileType todoq :call OptSpaceIndentation(4)
 autocmd FileType todoq :set foldmethod=indent
 autocmd FileType python setlocal nosmartindent
 
