@@ -67,6 +67,7 @@ def main():
     dest_nvim = _path('~/.config/nvim')
     for nvim_file in (DOTFILES / 'cfg/nvim').glob('*'):
         element = (nvim_file, nvim_file.name, dest_nvim)
+        files_list.append(element)
 
     # Disclaimer and options
     if disclaimer(files_list, [dest_vscode, dest_nvim], BACKUP_DIR):

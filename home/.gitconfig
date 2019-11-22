@@ -22,6 +22,7 @@
     pp = !git pull && git push
     s = status -sb
     b = branch
+    co = checkout
 
     # When doing "git git log" or some such, do not complain about "git"
     git = !git
