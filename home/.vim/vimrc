@@ -79,11 +79,11 @@ filetype plugin indent on " Idk what is this but it seems to work.
 
 " Set color theme
 set background=dark
-colorscheme gruvbox
+colorscheme monokai
 
 " Autocmds
 autocmd BufNewFile,BufRead,BufEnter *.tq :set filetype=todoq
-autocmd FileType todoq :call OptSpaceIndentation(2)
+autocmd FileType todoq :call OptSpaceIndentation(4)
 autocmd FileType todoq :set foldmethod=indent
 autocmd FileType python setlocal nosmartindent
 
@@ -204,10 +204,11 @@ nnoremap <silent> <Leader>dn Go<C-o>0- [ ] <C-r>=strftime('%F')<CR>
 
 " Lightline
 let g:lightline = {
+      \ 'colorscheme': 'deus',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename' ] ],
-      \ }}
+      \   'left': [[ 'mode', 'paste' ], [ 'readonly', 'filename' ]],
+      \ },
+      \ }
 
 " Space Indentation
 call OptSpaceIndentation(4)

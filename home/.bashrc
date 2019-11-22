@@ -49,9 +49,6 @@ alias du='du -shc'
 alias rcp='rsync -aP'
 alias rmv='rsync -aP --remove-source-files'
 
-# Git-related
-gsa() { for repo in ~/git/*; do pushd $repo; git s; popd &>/dev/null; done; }
-
 # Directory variables and aliases for them
 export NOTES="$HOME/git/personal/notes"
 export TODO="$HOME/git/personal/todo"
