@@ -4,9 +4,9 @@
 
 pathappend() {
     # Appends the args to the PATH.
-    for arg in "$@"; do
+    for ARG in "$@"; do
         if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
-            PATH="${PATH:+"$PATH:"}$ARG"
+            export PATH="${PATH:+"$PATH:"}$ARG"
         fi
     done
 }

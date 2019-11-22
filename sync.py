@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# TODO: Make better debugging system
+# TODO: Make my own python lib with some tools
+
 """Dotfiles syncronization.
 Recursively based on: https://github.com/denysdovhan/dotfiles/blob/master/sync.py
 Based on: https://github.com/sapegin/dotfiles/blob/master/sync.py
@@ -11,20 +14,69 @@ from pathlib import Path
 # Make a lambda for creating expanded path objects
 _path = lambda dest: Path(dest).expanduser()
 
-def main():
+# Options
+_automatic_agree = False
 
-    # Process arguments from command line
-    # args = (source, destination, backup)
-    args = tuple(sys.argv[1:]) if len(sys.argv) > 1 else ()
+def wrap(function, args=()):
+    """Runs a function in a wrapped environment, cancelling some common error codes."""
+    try:
+        function(*args)
+    except BaseException as e:
+        error_type = type(e).__name__
+        if error_type in {'KeyboardInterrupt', 'EOFError'}:
+            print(f'\n\033[35m(!)\033[m Operation Interrupted by {error_type}')
+        else:
+            raise e
+
+def disclaimer(file_list, dirs_to_create, backup_dir):
+    """Warns about what will be symlinked, deleted or backed up."""
+    print('The following files will be created:')
+    for file in file_list:
+        print('  {}'.format(file[2]/file[1]))
+    print(f'If these files are on your computer already, their current versions will be backed up into the following folder:\n  {backup_dir}.')
+    print('The following directories will be created:')
+    for dir_ in dirs_to_create:
+        print(f'  {dir_}')
+    return ask('Do you wish to continue with the operation?')
+
+def ask(question):
+    """Asks if the user will want to manually agree with each file."""
+    i = input(f'\033[33m(?)\033[m {question} [Y/n] ').lower()
+    return i != 'n'
+
+def main():
 
     # Create main variables
     DOTFILES = _path(__file__).absolute().parents[0]
-    SOURCE_DIR = _path(args[0] if len(args) >= 1 else (DOTFILES / 'home'))
-    DEST_DIR = _path(args[1] if len(args) >= 2 else '~')
-    BACKUP_DIR = _path(args[2] if len(args) >= 3 else (DOTFILES / '.backup' / (datetime.datetime.now().strftime('%Y%m%d-%H.%M'))))
+    TIME_STRING = '%Y%m%d-%H:%M'
+    BACKUP_DIR = _path(DOTFILES / '.backup' / (datetime.datetime.now().strftime(TIME_STRING)))
 
-    # Symlink all files
-    symlink_all_files(SOURCE_DIR, DEST_DIR, BACKUP_DIR)
+    # Prepare the files list
+    files_list = []
+
+    dest_home = _path('~')
+    for home_file in (DOTFILES / 'home').glob('*'):
+        element = (home_file, home_file.name, dest_home)
+        files_list.append(element)
+
+    dest_vscode = _path('~/.config/Code/User')
+    for vscode_file in (DOTFILES / 'cfg/vscode').glob('*'):
+        element = (vscode_file, vscode_file.name, dest_vscode)
+        files_list.append(element)
+
+    dest_nvim = _path('~/.config/nvim')
+    for nvim_file in (DOTFILES / 'cfg/nvim').glob('*'):
+        element = (nvim_file, nvim_file.name, dest_nvim)
+
+    # Disclaimer and options
+    if disclaimer(files_list, [dest_vscode, dest_nvim], BACKUP_DIR):
+        print('You can press Ctrl-C or Ctrl-D at any time to cancel the operation.')
+        _automatic_agree = not ask('Would you like to select which files to copy?')
+        # Make necessary directories
+        dest_vscode.mkdir(parents=True, exist_ok=True)
+        dest_nvim.mkdir(parents=True, exist_ok=True)
+        for file in files_list:
+            symlink_file(*file, BACKUP_DIR, _automatic_agree)
 
 def force_remove(path):
     """Forces the removal of a directory, symlink or file."""
@@ -44,77 +96,34 @@ def copy(path, dest):
     else:
         shutil.copy(path, dest)
 
-def symlink_file(file, source_dir, dest_dir, backup_dir, options_dict={}):
+def symlink_file(file_path, file_name, dest_folder, backup_folder, automatic_agree=False):
+    """Makes a symlink called file_name in the folder dest_folder that points to file_path.
 
-    print(f'Symlinking {file}...')
+    file_path -- The complete file to symlink path.
+    file_name -- The name (without parent folders) that the symlink file will point to.
+    dest_folder -- The folder where the symlink file will be created.
+    """
+    symlink_dest = dest_folder / file_name
+    print(f'\033[32m(*)\033[m Symlinking {symlink_dest}...')
 
-    source_file = source_dir / file # The file that exists in the dotfiles repository and will be pointed to by the symlink files.
-    dest_file = dest_dir / file # The file that will be created and will point to the source_file.
+    if symlink_dest.exists():
 
-    # Get options from the dict
-    backup_conflicts = options_dict['backup_conflicts'] if 'backup_conflicts' in options_dict else False
-    
-    # Check if we aren't overwriting anything
-    if dest_file.exists():
+        # Ask if the user wants to overwrite the file.
+        if not automatic_agree:
+            if not ask(f'Backup and overwrite file {symlink_dest}?'):
+                return
 
-        # Ignore file if it already is the link that we want.
-        if is_link_to(dest_file, source_file): return
+        backup_path = backup_folder / str(symlink_dest)[1:] # Weird hack to remove the first slash from '/home' and make it possible to create a "home" folder inside the backup folder
+        backup_folder.mkdir(exist_ok=True, parents=True)
+        backup_path.parents[0].mkdir(exist_ok=True, parents=True)
+        copy(symlink_dest, backup_path)
 
-        # Set up input variable
-        input_ = ''
+        print(f'\033[36m(B)\033[m Made a backup to {backup_path}')
 
-        # Ask for overwriting file.
-        input_ = 'y' if backup_conflicts else input(f'Overwrite file {dest_file}? [y/N] ').lower()
+        force_remove(symlink_dest)
 
-        if input_ == '@':
-            backup_conflicts = options_dict['backup_conflicts'] = True
-        elif not input_ == 'y':
-            print(f'Skipping {dest_file}...')
-            return
-
-        else:
-
-            # Make backup copy if we're overwriting this file
-            input_ = 'y' if backup_conflicts else input(f'Make a backup of {dest_file}? [y/N] ').lower()
-            if input_ == 'y':
-                backup_dir.mkdir(exist_ok=True, parents=True)
-                backup = backup_dir / dest_file.name
-                copy(dest_file, backup)
-                print(f'Made a backup to {backup}')
-            elif input_ == '@':
-                backup_conflicts = options_dict['backup_conflicts'] = True
-
-        # Remove the dest_file after doing the process above
-        force_remove(dest_file)
-
-    dest_file.symlink_to(source_file)
-    print(f'{source_file} \033[34m=>\033[m {dest_file}')
-
-def symlink_all_files(source_dir, dest_dir, backup_dir):
-
-    # Initial warning (?)
-    print('Type @ in any of the prompts to ignore conflicts and delete with backup.')
-
-    # Initial Options
-    options = {
-        'backup_conflicts': False # When True, ignores prompts and always replaces, but backing up first.
-    }
-
-    # Make the files list to analysis
-    files = [file.name for file in source_dir.glob('*')]
-
-    # Iterate throught the files list
-    for file in files:
-        symlink_file(file, source_dir, dest_dir, backup_dir, options_dict=options) 
-
-    # VSCode Files
-    vscode_files = [file.name for file in (_path(source_dir) / '..' / 'vscode').glob('*')]
-
-    # Iterate through the vscode files list
-    for file in vscode_files:
-        _path('~/.config/Code/User').mkdir(parents=True, exist_ok=True)
-        symlink_file(file, _path(source_dir) / '..' / 'vscode', _path('~/.config/Code/User'), backup_dir, options_dict=options)
+    symlink_dest.symlink_to(file_path)
+    print(f'\033[34m(L)\033[m {symlink_dest} \033[34m:=\033[m {file_path}')
 
 if __name__ == '__main__':
-    try: main()
-    except KeyboardInterrupt: print('\nOperation Interrupted by KeyboardInterrupt.')
+    wrap(main, ())
