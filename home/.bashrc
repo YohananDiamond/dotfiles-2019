@@ -12,11 +12,7 @@ fi
 export COLUMNS # Make all processes know the amount of columns
 
 export PLATFORM="std"
-if [[ -r /sdcard ]]; then
-  export PLATFORM="termux"
-elif [[ -r "/mnt/c/Windows" ]]; then
-  export PLATFORM="wsl"
-fi
+[[ -r /sdcard ]] && export PLATFORM="termux"
 
 # HEADER FILES ###################################
 
@@ -92,7 +88,7 @@ set_prompt() {
 
     # Increment PQ bit by bit.
     # PQ is the short for PROMPT_QUEUE
-    local PQ=${COL_MAIN}' (\u)'${COL_RESET}
+    local PQ=${COL_MAIN}' ($(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo \u))'${COL_RESET}
     local PQ=${PQ}${COL_ALT}' \w '${COL_RESET}
     local PQ=${PQ}' ' # Last space
     export PS1="$PQ"

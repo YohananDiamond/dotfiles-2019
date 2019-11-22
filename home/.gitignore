@@ -10,7 +10,7 @@ Thumbs.db
 
 # IDE/Editor files
 *.sublime-*
-vscode
+.vscode
 .idea
 
 # Temp / Backup Files
