@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
-
-# TODO: Make better debugging system
-# TODO: Make my own python lib with some tools
-
-"""Dotfiles syncronization.
-Recursively based on: https://github.com/denysdovhan/dotfiles/blob/master/sync.py
-Based on: https://github.com/sapegin/dotfiles/blob/master/sync.py
-"""
+# Dotfiles Synchronization
+# Based off:
+#  https://github.com/denysdovhan/dotfiles/blob/master/sync.py
+#  https://github.com/sapegin/dotfiles/blob/master/sync.py
 
 import os, sys, shutil, datetime
 from pathlib import Path
