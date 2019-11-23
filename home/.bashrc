@@ -44,6 +44,8 @@ alias ipy3='ipython'
 alias du='du -shc'
 alias rcp='rsync -aP'
 alias rmv='rsync -aP --remove-source-files'
+alias vi='nvim'
+alias vim='nvim'
 
 # Directory variables and aliases for them
 export NOTES="$HOME/git/personal/notes"
