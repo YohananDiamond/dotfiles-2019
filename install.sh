@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # I copied a lot of this from denysdovhan's install script :P
 DOTFILES=${1:-"$HOME/git/dotfiles"}
@@ -106,7 +106,7 @@ install_dotfiles() {
             fi
         fi
     else
-        echo "Your dotfiles already set up."
+        echo "Your dotfiles are already set up."
     fi
 
     echo

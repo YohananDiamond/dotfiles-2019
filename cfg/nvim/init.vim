@@ -66,6 +66,7 @@ command! -nargs=0 WhitespaceMode set list!
 command! -nargs=0 WrapMode set wrap!
 command! -nargs=0 W w
 command! -nargs=0 GitSync !echo "Syncing..." && git ac && git pp
+command! -nargs=0 Black call BlackFormat()
 
 " Listchars
 set listchars=tab:»\ 
@@ -88,7 +89,7 @@ autocmd FileType todoq :set foldmethod=indent
 autocmd FileType python setlocal nosmartindent
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-" <Option Functions>
+" <Functions>
 
 " Create function to set tab indentation
 func! OptTabIndentation(size)
@@ -106,23 +107,17 @@ func! OptSpaceIndentation(size)
 	set smarttab
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" <Functions>
-
-func! XReplace(...)
-    let l:a = input('Replace> ')
-    let l:b = input('Replace /' . l:a . '/ with> ')
-    let l:c = input('One by one? [Y/n] ')
-    if (l:c == 'Y') || (l:c == 'y')
-        let l:mode = 'gc'
-    elseif (l:c == 'N') || (l:c == 'n')
-        let l:mode = 'g'
+" Black formatting
+" I've made my own extension because I want something really, really simple.
+func! BlackFormat()
+    " Check if the buffer is modified
+    if &modified
+        echo "This buffer is modified! Please save your changes before running black."
     else
-        let l:mode = 'g'
+        !python3 -m black %
+        edit " Reload the file
     endif
-    exec '%s/' . l:a . '/' . l:b . '/' . l:mode
-endfunc
-command! -nargs=0 XReplace call XReplace()
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Mapping>
