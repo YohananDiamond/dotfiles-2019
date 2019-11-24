@@ -175,8 +175,8 @@ nnoremap <silent> <C-x>0 :close<CR>
 nnoremap <silent> <Leader>/ :noh<CR>
 
 " Use ç/Ç (from Portuguese/Brazilian keyboard) on normal mode for :
-nmap Ç :
-nmap ç ;
+nnoremap Ç :
+nnoremap ç :
 
 " Some complex commands; I'm still testing them.
 nnoremap <silent> <Leader>d*t ggdG

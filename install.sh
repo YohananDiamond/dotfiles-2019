@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # I copied a lot of this from denysdovhan's install script :P
 DOTFILES=${1:-"$HOME/git/dotfiles"}
