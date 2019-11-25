@@ -67,6 +67,10 @@ command! -nargs=0 WrapMode set wrap!
 command! -nargs=0 W w
 command! -nargs=0 GitSync !echo "Syncing..." && git ac && git pp
 command! -nargs=0 Black call BlackFormat()
+command! -nargs=0 OpenWORD call OpenWORD()
+command! -nargs=0 ExitSession execute 'mksession! | qa'
+
+cnoreabbrev exs ExitSession
 
 " Listchars
 set listchars=tab:»\ 
@@ -117,6 +121,11 @@ func! BlackFormat()
         !python3 -m black %
         edit " Reload the file
     endif
+endfunction
+
+func! OpenWORD()
+    let l:WORD = expand("<cWORD>")
+    execute '!xdg-open '.l:WORD
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -178,6 +187,11 @@ nnoremap <silent> <Leader>/ :noh<CR>
 nnoremap Ç :
 nnoremap ç :
 
+" Open command-line mode
+nnoremap <silent> <Leader>ç q:
+nnoremap <silent> <Leader>Ç q:
+nnoremap <silent> <Leader>: q:
+
 " Some complex commands; I'm still testing them.
 nnoremap <silent> <Leader>d*t ggdG
 
@@ -193,6 +207,9 @@ nnoremap <silent> <Leader>m zm
 " Add a new task (todoq format) to the end of the line.
 " Yeah. I need to move this into a plugin. I'll do it later.
 nnoremap <silent> <Leader>dn Go<C-o>0- [ ] <C-r>=strftime('%F')<CR> 
+
+" Escape terminal in nvim
+tnoremap <silent> <C-w> <C-\><C-n><C-w>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Plugin Settings>
