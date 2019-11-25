@@ -54,7 +54,7 @@ export REFL="$HOME/git/personal/notes/reference.mq"
 alias vp="(cd $HOME/git/personal && vi)"
 alias ctd='grep --exclude-dir=.git -rEI "TODO|FIXME" . 2>/dev/null'
 alias cnt='grep --exclude-dir=.git -rEI "NOTE" . 2>/dev/null'
-vsg() { (cd $(git rev-parse --show-toplevel) && vis); }
+vsg() { (cd $(git rev-parse --show-toplevel) && vs); }
 vs() { vi -S Session.vim; }
 
 # Open files
