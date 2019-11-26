@@ -11,10 +11,6 @@ execute pathogen#infect()
 let g:Config = {}
 let g:Config.InitPath = resolve(expand('<sfile>:p:h'))
 
-" Set up import and reload commands
-command! -nargs=1 Import
-    \ if isdirectory('C:\') | let s:extra = '/vimfiles' | else | let s:extra = '' | endif |
-	\ exec 'source ' . g:Config.InitPath . s:extra . "/" . eval(<f-args>) . '.vim'
 command! -nargs=0 Reload
 	\ source $MYVIMRC
 
@@ -27,17 +23,6 @@ if has('gui_running')
     else
         let &guifont='Ubuntu Mono 12,Fira Code 10.5,Cascadia Code 10.5,Consolas 12,Monospace 12'
     endif
-endif
-
-" Set status line settings (when not using lightline)
-if isdirectory('C:\')
-    set statusline=\ %f
-    set statusline+=%=
-    set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-    set statusline+=\ [%{&fileformat}\]\ 
-    set statusline+=\ %p%%\ 
-    set statusline+=\ %l:%c
-    set statusline+=\ 
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -60,6 +45,8 @@ set wrap
 set cursorline
 set mouse=a " Enable mouse
 set showcmd
+set complete=.,w,b,u,t " This actually was already the default, but I'm gonna force it because I don't know when it is default or not.
+set completeopt=longest,menuone
 
 " Commands
 command! -nargs=0 WhitespaceMode set list!
@@ -86,11 +73,31 @@ filetype plugin indent on " Idk what is this but it seems to work.
 set background=dark
 colorscheme monokai
 
-" Autocmds
-autocmd BufNewFile,BufRead,BufEnter *.tq :set filetype=todoq
-autocmd FileType todoq :call OptSpaceIndentation(4)
-autocmd FileType todoq :set foldmethod=indent
-autocmd FileType python setlocal nosmartindent
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <Augroups>
+
+augroup todoq
+    au!
+    au BufNewFile,BufRead,BufEnter *.tq set filetype=todoq
+    au FileType todoq call OptSpaceIndentation(4)
+    au FileType todoq setlocal foldmethod=indent
+augroup end
+
+augroup sh
+    au! FileType sh call OptSpaceIndentation(4)
+augroup end
+
+augroup python
+    " Not gonna make the au! line here because I'm not sure if it will end up
+    au! FileType python setlocal nosmartindent
+augroup end
+
+augroup visualg
+    au!
+    au BufNewFile,BufRead,BufEnter *.alg set filetype=visualg
+    au FileType visualg call OptSpaceIndentation(4)
+    au FileType visualg set syntax=c " I don't have any syntax files for VisuAlg, so lets' use C syntax.
+augroup end
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Functions>
@@ -100,7 +107,7 @@ func! OptTabIndentation(size)
 	let &tabstop=a:size
 	let &shiftwidth=a:size
 	set noexpandtab
-endfunction
+endfunc
 
 " Create function to set space indentation
 func! OptSpaceIndentation(size)
@@ -109,7 +116,7 @@ func! OptSpaceIndentation(size)
 	set expandtab
 	set softtabstop=0
 	set smarttab
-endfunction
+endfunc
 
 " Black formatting
 " I've made my own extension because I want something really, really simple.
@@ -121,18 +128,36 @@ func! BlackFormat()
         !python3 -m black %
         edit " Reload the file
     endif
-endfunction
+endfunc
 
 func! OpenWORD()
     let l:WORD = expand("<cWORD>")
     execute '!xdg-open '.l:WORD
-endfunction
+endfunc
+
+func! TabOrComplete(mode)
+    " Function called by the <Tab> (or <S-Tab>) key on insert mode.
+    " Use <Tab> to complete when typing words, else inserts TABs as usual.
+    " Pretty lightweight, I don't want to use an autocompletion engine for now. Maybe I'll start using when I learn java or something like, idk.
+    " Stolen from https://github.com/luxpir/plaintext-productivity/blob/master/.vimrc
+    " if col(".") > 1 && strpart(getline("."), col(".") - 2, 3) =~ '^\w'
+    if (col(".") > 1) && strcharpart(getline("."), col(".") - 2, 1) =~ '\w'
+        if (a:mode == 0)
+            return "\<C-P>"
+        elseif (a:mode == 1)
+            return "\<C-N>"
+        endif
+    else
+        return "\<Tab>"
+    endif
+endfunc
+
+call OptSpaceIndentation(4)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Mapping>
 
 " Map <Space> to <Leader> on a (kinda) better way
-" 
 nmap <Space> <Leader>
 vmap <Space> <Leader>
 
@@ -211,6 +236,18 @@ nnoremap <silent> <Leader>dn Go<C-o>0- [ ] <C-r>=strftime('%F')<CR>
 " Escape terminal in nvim
 tnoremap <silent> <C-w> <C-\><C-n><C-w>
 
+" Use Tab to Complete or insert spaces
+inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>
+inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
+
+" Navigate with <C-k>, <C-j> and <C-m> on Completion Mode
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "<C-k>"
+inoremap <expr> <C-m> pumvisible() ? "\<C-y>" : "<C-m>"
+
+" Filename completion with <C-l>
+inoremap <silent> <C-l> <C-x><C-f>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Plugin Settings>
 
@@ -221,9 +258,6 @@ let g:lightline = {
       \   'left': [[ 'mode', 'paste' ], [ 'readonly', 'filename' ]],
       \ },
       \ }
-
-" Space Indentation
-call OptSpaceIndentation(4)
 
 " CtrlP
 let g:ctrlp_cmd = 'CtrlPBuffer'
