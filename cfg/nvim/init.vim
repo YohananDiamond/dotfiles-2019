@@ -197,7 +197,7 @@ nnoremap <silent> <Tab> >>
 nnoremap <silent> <S-Tab> <<
 vnoremap <silent> <Tab> >gv
 vnoremap <silent> <S-Tab> <gv
-inoremap <silent> <S-Tab> <C-o>:exec 'normal '.&tabstop.'X'<CR>
+" inoremap <silent> <S-Tab> <C-o>:exec 'normal '.&tabstop.'X'<CR>
 
 " Toggle NERDTree
 nnoremap <silent> <C-C>o :NERDTreeToggle<CR>
@@ -240,9 +240,6 @@ tnoremap <silent> <C-w> <C-\><C-n><C-w>
 inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>
 inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
 
-" Use <C-Space> on insert mode to expand snippets. Probably a temporary mapping... I'm still thinking about using autocompletion (a lightweight one, though.)
-inoremap <silent> <C-Space> <C-r>=UltiSnips#ExpandSnippet()<CR>
-
 " Navigate with <C-k>, <C-j> and <C-m> on Completion Mode
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "<C-k>"
@@ -264,3 +261,9 @@ let g:lightline = {
 
 " CtrlP
 let g:ctrlp_cmd = 'CtrlPBuffer'
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger='<C-Space>'
+
+" Load all packages (plugins)
+packloadall
