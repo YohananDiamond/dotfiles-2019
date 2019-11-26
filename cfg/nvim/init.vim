@@ -147,7 +147,7 @@ func! TabOrComplete(mode)
         elseif (a:mode == 1)
             return "\<C-N>"
         endif
-    else
+    else 
         return "\<Tab>"
     endif
 endfunc
@@ -239,6 +239,9 @@ tnoremap <silent> <C-w> <C-\><C-n><C-w>
 " Use Tab to Complete or insert spaces
 inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>
 inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
+
+" Use <C-Space> on insert mode to expand snippets. Probably a temporary mapping... I'm still thinking about using autocompletion (a lightweight one, though.)
+inoremap <silent> <C-Space> <C-r>=UltiSnips#ExpandSnippet()<CR>
 
 " Navigate with <C-k>, <C-j> and <C-m> on Completion Mode
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "<C-j>"
