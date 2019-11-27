@@ -4,7 +4,10 @@
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible
+let g:pathogen_disabled = []
+if isdirectory('/sdcard')
+    call add(g:pathogen_disabled, 'ultisnips')
+endif
 execute pathogen#infect()
 
 " Initial Variables
@@ -24,6 +27,7 @@ if has('gui_running')
         let &guifont='Ubuntu Mono 12,Fira Code 10.5,Cascadia Code 10.5,Consolas 12,Monospace 12'
     endif
 endif
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Editor settings & etc.>
@@ -164,32 +168,21 @@ vmap <Space> <Leader>
 " Remove <Esc> delays
 set timeoutlen=1000 ttimeoutlen=0
 
-" Switch between buffers
-nnoremap <silent> <C-x>j :bn<CR>
-nnoremap <silent> <C-x>k :bp<CR>
-tnoremap <silent> <C-x>j <C-w>:bn<CR>
-tnoremap <silent> <C-x>k <C-w>:bp<CR>
-nnoremap <silent> <C-x><Down> :bn<CR>
-nnoremap <silent> <C-x><Up> :bp<CR>
-tnoremap <silent> <C-x><Down> <C-w>:bn<CR>
-tnoremap <silent> <C-x><Up> <C-w>:bp<CR>
-
 " Mouse Wheel Scrolling
 map <ScrollWheelUp> <C-U>
 map <ScrollWheelDown> <C-D>
 
 " Select all
 nnoremap <silent> <Leader>a ggVG
-vnoremap <silent> <Leader>a <Esc>ggVG
 
 " Copy to registers
 nnoremap <silent> <Leader>y "+y
 nnoremap <silent> <Leader>p "+p
-nnoremap <silent> <Leader>x "+x
 nnoremap <silent> <Leader>d "+d
+nnoremap <silent> <Leader>Y "+Y
+nnoremap <silent> <Leader>P "+P
+nnoremap <silent> <Leader>D "+D
 vnoremap <silent> <Leader>y "+y
-vnoremap <silent> <Leader>p "+p
-vnoremap <silent> <Leader>x "+x
 vnoremap <silent> <Leader>d "+d
 
 " Indentation Management
@@ -197,41 +190,25 @@ nnoremap <silent> <Tab> >>
 nnoremap <silent> <S-Tab> <<
 vnoremap <silent> <Tab> >gv
 vnoremap <silent> <S-Tab> <gv
-" inoremap <silent> <S-Tab> <C-o>:exec 'normal '.&tabstop.'X'<CR>
-
-" Toggle NERDTree
-nnoremap <silent> <C-C>o :NERDTreeToggle<CR>
-
-" Close windows
-nnoremap <silent> <C-x>0 :close<CR>
 
 " Clear search query
 nnoremap <silent> <Leader>/ :noh<CR>
 
 " Use ç/Ç (from Portuguese/Brazilian keyboard) on normal mode for :
-nnoremap Ç :
-nnoremap ç :
+nmap Ç :
+nmap ç :
 
 " Open command-line mode
-nnoremap <silent> <Leader>ç q:
-nnoremap <silent> <Leader>Ç q:
-nnoremap <silent> <Leader>: q:
-
-" Some complex commands; I'm still testing them.
-nnoremap <silent> <Leader>d*t ggdG
+nnoremap <silent> qç q:
+nnoremap <silent> qÇ q:
 
 " Open files, MRU and ALL on CtrlP with a slightly different mapping (see <Plugin Settings> section)
-nnoremap <silent> <C-o> :CtrlP<CR>
-nnoremap <silent> <C-c>0 :CtrlPMRU<CR>
-nnoremap <silent> <C-c>p :CtrlPMixed<CR>
+nnoremap <silent> <Leader>f :CtrlP<CR>
+nnoremap <silent> <Leader>gf :CtrlPMixed<CR>
 
 " Folding Commands
 nnoremap <silent> <Leader>o zA
 nnoremap <silent> <Leader>m zm
-
-" Add a new task (todoq format) to the end of the line.
-" Yeah. I need to move this into a plugin. I'll do it later.
-nnoremap <silent> <Leader>dn Go<C-o>0- [ ] <C-r>=strftime('%F')<CR> 
 
 " Escape terminal in nvim
 tnoremap <silent> <C-w> <C-\><C-n><C-w>
@@ -239,6 +216,10 @@ tnoremap <silent> <C-w> <C-\><C-n><C-w>
 " Use Tab to Complete or insert spaces
 inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>
 inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
+
+" Use <C-Space> on insert mode to expand snippets or jump through them
+inoremap <silent> <C-Space> <C-r>=UltiSnips#ExpandSnippetOrJump()<CR>
+inoremap <silent> <C-b> <C-r>=UltiSnips#JumpBackwards()<CR>
 
 " Navigate with <C-k>, <C-j> and <C-m> on Completion Mode
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "<C-j>"
@@ -262,8 +243,8 @@ let g:lightline = {
 " CtrlP
 let g:ctrlp_cmd = 'CtrlPBuffer'
 
-" UltiSnips
-let g:UltiSnipsExpandTrigger='<C-Space>'
+" UltiSnips (map to some random unused key, since I'm using some other system to go to it, mentioned in the other mappings part. Laziness...
+let g:UltiSnipsExpandTrigger='<C-4>'
 
 " Load all packages (plugins)
 packloadall

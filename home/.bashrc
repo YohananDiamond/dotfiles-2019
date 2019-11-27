@@ -31,6 +31,8 @@ fi
 
 test -r $DOTFILES/dircolors && eval "$(dircolors -b $DOTFILES/dircolors)" || eval "$(dircolors -b)"
 
+export EDITOR=nvim
+
 # ALIASES & FUNCTIONS ############################
 
 alias rebash='source $HOME/.bashrc'
