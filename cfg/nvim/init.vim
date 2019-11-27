@@ -205,6 +205,7 @@ nnoremap <silent> qÇ q:
 " Open files, MRU and ALL on CtrlP with a slightly different mapping (see <Plugin Settings> section)
 nnoremap <silent> <Leader>f :CtrlP<CR>
 nnoremap <silent> <Leader>gf :CtrlPMixed<CR>
+nmap <silent> <Leader>b <C-p>
 
 " Folding Commands
 nnoremap <silent> <Leader>o zA
