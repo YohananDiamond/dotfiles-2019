@@ -31,9 +31,12 @@ fi
 
 test -r $DOTFILES/dircolors && eval "$(dircolors -b $DOTFILES/dircolors)" || eval "$(dircolors -b)"
 
+export EDITOR=nvim
+
 # ALIASES & FUNCTIONS ############################
 
 alias rebash='source $HOME/.bashrc'
+alias vp="(cd $HOME/git/personal && vi)"
 alias ls='ls --color=auto'
 alias la='ls -A'
 alias ll='ls -alF'
@@ -42,20 +45,34 @@ alias cl='cd $@ && la'
 alias py3='python3' 
 alias ipy3='ipython'
 alias du='du -shc'
-alias rcp='rsync -aP'
-alias rmv='rsync -aP --remove-source-files'
+alias cps='cp -ur'
 alias vi='nvim'
 alias vim='nvim'
 
-# Directory variables and aliases for them
-export NOTES="$HOME/git/personal/notes"
-export TODO="$HOME/git/personal/todo"
-export REFL="$HOME/git/personal/notes/reference.mq"
-alias vp="(cd $HOME/git/personal && vi)"
-alias ctd='grep --exclude-dir=.git -rEI "TODO|FIXME" . 2>/dev/null'
-alias cnt='grep --exclude-dir=.git -rEI "NOTE" . 2>/dev/null'
-vsg() { (cd $(git rev-parse --show-toplevel) && vs); }
-vs() { vi -S Session.vim; }
+vs() {(
+    # Open session.vim
+    if [ -f Session.vim ]; then
+        vi -S Session.vim # Open the vim session
+    else
+        cd $(git rev-parse --show-toplevel 2>/dev/null) # CD to the top of the git repository, if on the git repository.
+        vi -S Session.vim
+    fi
+)}
+
+cgt() {
+    # CD to Git Top Level (cd-git-top)
+    local result=$(git rev-parse --show-toplevel 2>/dev/null)
+    if [ -z "${result}" ]; then
+        cd "${result}"
+    else
+        echo "cgt: not on a git repository."
+    fi
+}
+
+grept() {
+    grep --exclude-dir=".git" -rEI "TODO:|FIXME:|@todo|@fixme" . 2>/dev/null
+    grep --exclude-dir=".git" -rEI "NOTE:|@note" . 2>/dev/null
+}
 
 # Open files
 if [[ ${PLATFORM} == "termux" ]]; then
