@@ -221,7 +221,7 @@ inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
 
 " Use <C-Space> on insert mode to expand snippets or jump through them
 inoremap <silent> <C-Space> <C-r>=UltiSnips#ExpandSnippetOrJump()<CR>
-inoremap <silent> <C-b> <C-r>=UltiSnips#JumpBackwards()<CR>
+inoremap <silent> <M-Space> <C-r>=UltiSnips#JumpBackwards()<CR>
 
 " Navigate with <C-k>, <C-j> and <C-m> on Completion Mode
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "<C-j>"
