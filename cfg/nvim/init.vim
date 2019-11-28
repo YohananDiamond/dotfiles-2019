@@ -213,6 +213,7 @@ nnoremap <silent> <Leader>m zm
 
 " Escape terminal in nvim
 tnoremap <silent> <C-w> <C-\><C-n><C-w>
+tnoremap <silent> <M-w> <C-\><C-n>
 
 " Use Tab to Complete or insert spaces
 inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>

@@ -12,6 +12,7 @@ Thumbs.db
 *.sublime-*
 .vscode
 .idea
+Session.vim
 
 # Temp / Backup Files
 *~
