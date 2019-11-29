@@ -60,6 +60,7 @@ command! -nargs=0 GitSync !echo "Syncing..." && git ac && git pp
 command! -nargs=0 Black call BlackFormat()
 command! -nargs=0 OpenWORD call OpenWORD()
 command! -nargs=0 ExitSession execute 'mksession! | qa'
+command! -nargs=+ RunFile call RunFile(<f-args>)
 
 cnoreabbrev exs ExitSession
 
@@ -78,7 +79,7 @@ set background=dark
 colorscheme monokai
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-" <Augroups>
+" <Augroups> 
 
 augroup todoq
     au!
@@ -92,8 +93,11 @@ augroup sh
 augroup end
 
 augroup python
-    " Not gonna make the au! line here because I'm not sure if it will end up
+    au!
+    au BufNewFile,BufRead,BufEnter *.py set filetype=python
     au! FileType python setlocal nosmartindent
+    au! FileType python let b:runfile_command = "python3"
+    au! FileType python setlocal cindent smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 augroup end
 
 augroup visualg
@@ -142,7 +146,7 @@ endfunc
 func! TabOrComplete(mode)
     " Function called by the <Tab> (or <S-Tab>) key on insert mode.
     " Use <Tab> to complete when typing words, else inserts TABs as usual.
-    " Pretty lightweight, I don't want to use an autocompletion engine for now. Maybe I'll start using when I learn java or something like, idk.
+    " Pretty lightweight, I don't want to use an autocompletion engine for now. Maybe I'll start using when I learn Java or something like, idk.
     " Stolen from https://github.com/luxpir/plaintext-productivity/blob/master/.vimrc
     " if col(".") > 1 && strpart(getline("."), col(".") - 2, 3) =~ '^\w'
     if (col(".") > 1) && strcharpart(getline("."), col(".") - 2, 1) =~ '\w'
@@ -156,7 +160,41 @@ func! TabOrComplete(mode)
     endif
 endfunc
 
-call OptSpaceIndentation(4)
+func! RunFile(command, vsplit, ...)
+    if exists("b:runfile_command")
+        " Prepare the command string
+        let l:command_string = 'terminal ' . a:command . ' % ' . join(a:000, ' ')
+        " Split or VSplit & move to new window
+        if (a:vsplit)
+            vsplit
+            normal l
+        else
+            split
+            normal j
+        endif
+        " Execute the command
+        execute l:command_string
+        " Enter the terminal
+        normal i
+    else
+        echo "Please define b:runfile_command with the command to run the current file (e.g. python3)."
+    endif
+endfunc
+
+" TODO: Fix this (I have no idea on why it doesn't work, there are no errors)
+" func! RunFileArgs(vsplit)
+"     if exists("b:runfile_command")
+"         let l:normal_string = 'normal :RunFile ' . b:runfile_command . ' '
+"         execute l:normal_string
+"     else
+"         echo "Please define b:runfile_command with the command to run the current file (e.g. python3)."
+"     endif
+" endfunc
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <Function Calls?>
+
+call OptSpaceIndentation(4) " Kinda unsafe, to be honest
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Mapping>
@@ -230,6 +268,12 @@ inoremap <expr> <C-m> pumvisible() ? "\<C-y>" : "<C-m>"
 
 " Filename completion with <C-l>
 inoremap <silent> <C-l> <C-x><C-f>
+
+" Run a file
+nnoremap <silent> <Leader>r :exec "RunFile " . b:runfile_command . " 0"<CR>
+nnoremap <silent> <Leader>vr :exec "RunFile " . b:runfile_command . " 1"<CR>
+" nnoremap <silent> <Leader>cr :call RunFileArgs(0)<CR>
+" nnoremap <silent> <Leader>cvr :call RunFileArgs(1)<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Plugin Settings>
