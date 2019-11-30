@@ -203,6 +203,10 @@ endfunction
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
+" Maybe shouldn't be here, but I'm too lazy.
+setlocal cindent
+setlocal smartindent
+setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
 let b:runfile_command = "python3"
 
 " vim:sw=2

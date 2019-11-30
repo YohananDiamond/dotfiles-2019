@@ -92,14 +92,6 @@ augroup sh
     au! FileType sh call OptSpaceIndentation(4)
 augroup end
 
-augroup python
-    au!
-    au BufNewFile,BufRead,BufEnter *.py set filetype=python
-    au! FileType python setlocal nosmartindent
-    au! FileType python let b:runfile_command = "python3 %"
-    au! FileType python setlocal cindent smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-augroup end
-
 augroup visualg
     au!
     au BufNewFile,BufRead,BufEnter *.alg set filetype=visualg
@@ -110,6 +102,7 @@ augroup end
 augroup rust
     au!
     au FileType rust let b:runfile_command = "cargo run"
+    au FileType rust set foldmethod=syntax
 augroup end
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -235,12 +228,8 @@ tnoremap <silent> <C-w> <C-\><C-n><C-w>
 tnoremap <silent> <M-w> <C-\><C-n>
 
 " Use Tab to Complete or insert spaces
-inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>
-inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
-
-" Use <C-Space> on insert mode to expand snippets or jump through them
-inoremap <silent> <C-Space> <C-r>=UltiSnips#ExpandSnippetOrJump()<CR>
-inoremap <silent> <M-Space> <C-r>=UltiSnips#JumpBackwards()<CR>
+" inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>
+" inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
 
 " Navigate with <C-k>, <C-j> and <C-m> on Completion Mode
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "<C-j>"
@@ -267,8 +256,12 @@ let g:lightline = {
 " CtrlP
 let g:ctrlp_cmd = 'CtrlPBuffer'
 
-" UltiSnips (map to some random unused key, since I'm using some other system to go to it, mentioned in the other mappings part. Laziness...
-let g:UltiSnipsExpandTrigger='<C-4>'
+" vim-mucomplete Settings (test)
+set completeopt-=preview
+set completeopt+=menuone,noselect
+set shortmess+=c   " Shut off completion messages
+set belloff+=ctrlg " If Vim beeps during completion
+let g:mucomplete#enable_auto_at_startup = 1
 
 " Load all packages (plugins)
 packloadall
