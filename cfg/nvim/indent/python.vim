@@ -203,4 +203,6 @@ endfunction
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
+let b:runfile_command = "python3"
+
 " vim:sw=2
