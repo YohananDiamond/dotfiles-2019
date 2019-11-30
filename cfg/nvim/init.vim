@@ -60,7 +60,7 @@ command! -nargs=0 GitSync !echo "Syncing..." && git ac && git pp
 command! -nargs=0 Black call BlackFormat()
 command! -nargs=0 OpenWORD call OpenWORD()
 command! -nargs=0 ExitSession execute 'mksession! | qa'
-command! -nargs=+ RunFile call RunFile(<f-args>)
+command! -nargs=+ RunFile call RunFile(eval(string(<q-args>))) " I don't even know at this point.
 
 cnoreabbrev exs ExitSession
 
@@ -96,7 +96,7 @@ augroup python
     au!
     au BufNewFile,BufRead,BufEnter *.py set filetype=python
     au! FileType python setlocal nosmartindent
-    au! FileType python let b:runfile_command = "python3"
+    au! FileType python let b:runfile_command = "python3 %"
     au! FileType python setlocal cindent smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 augroup end
 
@@ -105,6 +105,11 @@ augroup visualg
     au BufNewFile,BufRead,BufEnter *.alg set filetype=visualg
     au FileType visualg call OptSpaceIndentation(4)
     au FileType visualg set syntax=c " I don't have any syntax files for VisuAlg, so lets' use C syntax.
+augroup end
+
+augroup rust
+    au!
+    au FileType rust let b:runfile_command = "cargo run"
 augroup end
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -160,36 +165,12 @@ func! TabOrComplete(mode)
     endif
 endfunc
 
-func! RunFile(command, vsplit, ...)
-    if exists("b:runfile_command")
-        " Prepare the command string
-        let l:command_string = 'terminal ' . a:command . ' % ' . join(a:000, ' ')
-        " Split or VSplit & move to new window
-        if (a:vsplit)
-            vsplit
-            normal l
-        else
-            split
-            normal j
-        endif
-        " Execute the command
-        execute l:command_string
-        " Enter the terminal
-        normal i
-    else
-        echo "Please define b:runfile_command with the command to run the current file (e.g. python3)."
-    endif
+func! RunFile(command, ...)
+    let l:command_string = "terminal " . a:command . " % " . join(a:000, " ")
+    split | normal j
+    execute l:command_string
+    normal i
 endfunc
-
-" TODO: Fix this (I have no idea on why it doesn't work, there are no errors)
-" func! RunFileArgs(vsplit)
-"     if exists("b:runfile_command")
-"         let l:normal_string = 'normal :RunFile ' . b:runfile_command . ' '
-"         execute l:normal_string
-"     else
-"         echo "Please define b:runfile_command with the command to run the current file (e.g. python3)."
-"     endif
-" endfunc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Function Calls?>
@@ -270,10 +251,7 @@ inoremap <expr> <C-m> pumvisible() ? "\<C-y>" : "<C-m>"
 inoremap <silent> <C-l> <C-x><C-f>
 
 " Run a file
-nnoremap <silent> <Leader>r :exec "RunFile " . b:runfile_command . " 0"<CR>
-nnoremap <silent> <Leader>vr :exec "RunFile " . b:runfile_command . " 1"<CR>
-" nnoremap <silent> <Leader>cr :call RunFileArgs(0)<CR>
-" nnoremap <silent> <Leader>cvr :call RunFileArgs(1)<CR>
+nnoremap <silent> <Leader>r :exec ":RunFile " . b:runfile_command<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Plugin Settings>

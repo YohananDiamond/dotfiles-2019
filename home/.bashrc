@@ -121,6 +121,7 @@ set_prompt() {
 pathappend "$HOME/.local/bin"
 pathappend "$DOTFILES/bin"
 pathappend "$DOTFILES/lib"
+# [[ -r "/root/.cargo/bin" ]] && pathappend "/root/.cargo/bin" # For some reason it is not added automatically by rustup on my machine
 
 # FIRST LOAD CODE ###############################
 
