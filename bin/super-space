@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Run a terminal instance.
-# I hope to find some better alternative someday, but for now this seems to be one of the best ones.
-gnome-terminal --geometry='500x20+1000+1000' --command="$HOME/git/dotfiles/bin/space-switcher"

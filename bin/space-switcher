@@ -1,14 +1,33 @@
 #!/usr/bin/env bash
 
-# TODO: Make something really interesting here:
-# Main Menu
-# Window Switcher (idk if it's possible)
-# File Finder -> Menu Option
-# Terminal Command -> Run Directly into Terminal Instance
-# TODO: make it usable with rofi and fzf
+main() {
 
-# Select the engine where the application will run.
-_COMMAND='rofi -dmenu'
-# _COMMAND='fzf'
+    local self_run="env space-switcher"
+    local fuzzy="fzf" # in ("fzf" | "rofi -dmenu")
+    gnome-terminal --geometry="500x20+1000+1000" --command="${self_run} ${fuzzy}"
 
-compgen -c | ${_COMMAND}
+} 
+
+run_fuzzy() {
+
+    if [[ -z "$1" ]]; then
+        echo "space-switcher::run_fuzzy: no fuzzy finder program specified."
+        exit 1
+    fi
+
+    local command_list=$(compgen -c)
+
+    local fuzzy_choice=$(echo "${command_list}" | "$1")
+
+    # ("main menu" | "window switcher" | "file finder" | "terminal command")
+
+}
+
+# Select the function above to run
+if [[ -z "$1" ]]; then
+    # Run the terminal if no fuzzy finder arg is provided
+    main
+else
+    # Run the fuzzy finder code if a fuzzy finder arg is provided
+    run_fuzzy "$1"
+fi

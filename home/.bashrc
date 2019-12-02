@@ -31,7 +31,8 @@ fi
 
 test -r $DOTFILES/dircolors && eval "$(dircolors -b $DOTFILES/dircolors)" || eval "$(dircolors -b)"
 
-export EDITOR=nvim
+export EDITOR="nvim"
+export TERMINAL="gnome-terminal"
 
 # ALIASES & FUNCTIONS ############################
 
