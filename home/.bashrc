@@ -124,7 +124,14 @@ pathappend "$DOTFILES/bin"
 pathappend "$DOTFILES/lib"
 # [[ -r "/root/.cargo/bin" ]] && pathappend "/root/.cargo/bin" # For some reason it is not added automatically by rustup on my machine
 
-# FIRST LOAD CODE ###############################
+# BASH_PROFILE ###################################
+
+if [ -n "$DESKTOP_SESSION" ]; then
+    eval $(gnome-keyring-daemon --start)
+    export SSH_AUTH_SOCK
+fi
+
+# FIRST LOAD CODE ################################
 
 if [[ $FIRST == 0 ]]; then
 

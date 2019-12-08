@@ -4,7 +4,7 @@
 #  https://github.com/denysdovhan/dotfiles/blob/master/sync.py
 #  https://github.com/sapegin/dotfiles/blob/master/sync.py
 
-import os, sys, shutil, datetime
+import os, sys, shutil, datetime, uuid
 from pathlib import Path
 
 # Make a lambda for creating expanded path objects
@@ -32,7 +32,7 @@ def disclaimer(file_list, dirs_to_create, backup_dir):
     for file in file_list:
         print("  {}".format(file[2] / file[1]))
     print(
-        f"If these files are on your computer already, their current versions will be backed up into the following folder:\n  {backup_dir}."
+        f"If these files are on your computer already, their current versions will be backed up into the following folder (but broken symlinks will be deleted):\n  {backup_dir}."
     )
     print("The following directories will be created:")
     for dir_ in dirs_to_create:
@@ -50,9 +50,9 @@ def main():
 
     # Create main variables
     DOTFILES = _path(__file__).absolute().parents[0]
-    TIME_STRING = "%Y%m%d-%H:%M"
+    BACKUP_FOLDER = f"%Y%m%d-%H%M-{uuid.uuid4()}"
     BACKUP_DIR = _path(
-        DOTFILES / ".backup" / (datetime.datetime.now().strftime(TIME_STRING))
+        DOTFILES / ".backup" / (datetime.datetime.now().strftime(BACKUP_FOLDER))
     )
 
     # Prepare the files list
@@ -64,13 +64,19 @@ def main():
         files_list.append(element)
 
     dest_vscode = _path("~/.config/Code/User")
-    for vscode_file in (DOTFILES / "cfg/vscode").glob("*"):
+    for vscode_file in (DOTFILES / "config/vscode").glob("*"):
         element = (vscode_file, vscode_file.name, dest_vscode)
         files_list.append(element)
 
     dest_nvim = _path("~/.config/nvim")
-    for nvim_file in (DOTFILES / "cfg/nvim").glob("*"):
+    for nvim_file in (DOTFILES / "config/nvim").glob("*"):
         element = (nvim_file, nvim_file.name, dest_nvim)
+        files_list.append(element)
+
+    # Window Manager Files
+    dest_wman = _path("~/.config")
+    for wman_file in ("bspwm", "i3", "polybar", "sxhkd", "compton.conf"):
+        element = (DOTFILES / "config" / wman_file, wman_file, dest_wman)
         files_list.append(element)
 
     # Disclaimer and options
@@ -120,21 +126,24 @@ def symlink_file(
     symlink_dest = dest_folder / file_name
     print(f"\033[32m(*)\033[m Symlinking {symlink_dest}...")
 
-    if symlink_dest.exists():
+    if (symlink_dest.exists()
+        or symlink_dest.is_symlink()):
+        # Yeah. This is a weird hack for detecting broken symlinks.
 
         # Ask if the user wants to overwrite the file.
         if not automatic_agree:
             if not ask(f"Backup and overwrite file {symlink_dest}?"):
                 return
 
-        backup_path = (
-            backup_folder / str(symlink_dest)[1:]
-        )  # Weird hack to remove the first slash from '/home' and make it possible to create a "home" folder inside the backup folder
-        backup_folder.mkdir(exist_ok=True, parents=True)
-        backup_path.parents[0].mkdir(exist_ok=True, parents=True)
-        copy(symlink_dest, backup_path)
+        if symlink_dest.exists(): # Prevent broken symlinks
+            backup_path = (
+                backup_folder / str(symlink_dest)[1:]
+            ) # Weird hack to remove the first slash from '/home' or any other and make it possible to create a folder inside the backup folder with that name
+            backup_folder.mkdir(exist_ok=True, parents=True)
+            backup_path.parents[0].mkdir(exist_ok=True, parents=True)
+            copy(symlink_dest, backup_path)
 
-        print(f"\033[36m(B)\033[m Made a backup to {backup_path}")
+            print(f"\033[36m(B)\033[m Made a backup to {backup_path}")
 
         force_remove(symlink_dest)
 
