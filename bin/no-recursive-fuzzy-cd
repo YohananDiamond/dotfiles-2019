@@ -1,0 +1,16 @@
+#!/bin/bash
+
+__process() {
+    cd "$1"
+    if [[ "$1" == "." ]]; then
+        echo "${PWD}"
+    else
+        __select # Select again if the directory is not "."
+    fi
+}
+
+__select() {
+    __process "$(find . -maxdepth 1 -type d | fzf --height 50%)"
+}
+
+__select

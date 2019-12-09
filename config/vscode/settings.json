@@ -72,6 +72,6 @@
     "git.confirmSync": false,
     "window.zoomLevel": 0,
     "editor.lineNumbers": "relative",
-    "workbench.colorTheme": "Monokai",
+    "workbench.colorTheme": "One Dark Pro",
     "vim.foldfix": true,
 }

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 # I copied a lot of this from denysdovhan's install script :P
-DOTFILES=${1:-"$HOME/git/dotfiles"}
+# Wait... did I just... miss the original link? ... :v
+
+DOTFILES=${1:-"${HOME}/git/dotfiles"}
 DOTFILES_GITHUB_HTTPS="https://github.com/YohananDiamond/dotfiles"
 DOTFILES_GITHUB_SSH="git@github.com:yohanandiamond/dotfiles"
 
@@ -28,8 +30,10 @@ success() { echo -e "${GREEN}${*}${RESET}"; }
 welcome() {
 
     # Celeste ASCII Art because why not
+    local __art_width=60
+    ([[ "${COLUMNS}" -gt "${__art_width}" ]] || [[ "${COLUMNS}" -eq "${__art_width}" ]]) && \
     echo "
-▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓▓  
+▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓▓
 ▓▓▓▓▓▓▓▓████████████████████▓▓▓▓▓▓  ▓▓▓▓▓▓██████░░████▓▓▓▓▓▓
 ▓▓██████▒▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒▒▒▓▓██▓▓▓▓▓▓▓▓▓▓██    ██░░    ██▓▓▓▓
 ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓██▓▓▓▓▓▓██  ░░  ██░░  ██▓▓▓▓▓▓
@@ -40,7 +44,7 @@ welcome() {
 ▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▓░░░░░░██▓▓██▓▓▓▓██░░▒▒░░▒▒▒▒▒▒░░▒▒▒▒░░██
 ▓▓▓▓▓▓▓▓██▓▓▒▒▒▒▒▒▒▒▒▒▓▓▓▓████▓▓▓▓▓▓▓▓██▒▒▒▒▒▒▒▒▒▒░░░░▒▒██▓▓
 ▓▓▓▓▓▓▓▓██▒▒▒▒▒▒▒▒▒▒░░░░▒▒▒▒░░██▓▓▓▓▓▓▓▓██▒▒▒▒▒▒▒▒░░▒▒██▓▓▓▓
-▓▓▓▓▓▓██▒▒▒▒▓▓▒▒▒▒░░░░▒▒▒▒░░██▓▓▓▓▓▓▓▓▓▓██▒▒▒▒▒▒▒▒██▓▓▓▓▓▓
+▓▓▓▓▓▓██▒▒▒▒▓▓▒▒▒▒░░░░▒▒▒▒░░██▓▓▓▓▓▓▓▓▓▓██▒▒▒▒▒▒▒▒██▓▓▓▓▓▓  
 ▓▓▓▓▓▓▓▓██░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████▓▓▓▓▓▓▓▓
 ▓▓▓▓▓▓██░░▒▒▒▒▓▓▓▓▒▒▒▒▒▒▒▒▓▓██▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ▓▓▓▓▓▓██░░░░██▓▓▒▒▒▒▓▓▓▓▓▓▒▒██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -52,18 +56,18 @@ welcome() {
     # The header and credits to the art
     echo "
                    YOHANAN'S DOTFILES!
-      (Art found on https://textart.sh/topic/celeste)" # The newline is because I wanted to align it visually with the art. There probably is a better solution.
+      (Art found on https://textart.sh/topic/celeste)" # The newline is because I wanted to align it visually with the art.
 
     # Create the DOTFILES var
     echo
-    mkdir -p ~/.config/_vars
-    echo $DOTFILES > ~/.config/_vars/DOTFILES
-    info "The file ~/.config/_vars/DOTFILES was created, and it contains the path to the dotfiles, which is ${DOTFILES}"
+    local __vars_path=~/.config/.vars
+    mkdir -p "${__vars_path}"
+    echo ${DOTFILES} > "${__vars_path}/DOTFILES"
+    info "The file "${__vars_path}/DOTFILES" was created, and it contains the path to the dotfiles, which is ${DOTFILES}"
     echo
 
     info "This script will guide you through installing git, vim, tmux and the dotfiles themselves."
-    echo "Sorry if this is not polished :/"
-    echo "If you find any problem, I'd be happy to get some issues on GitHub about it."
+    echo "If you find any problem, please send your issue on the github repo (https://github.com/YohananDiamond/dotfiles/issues)."
     echo
     read -p "Do you want to proceed with installation? [y/N] " -n 1 answer
     echo
@@ -111,22 +115,35 @@ install_dotfiles() {
 
     echo
     info "Trying to sync the dotfiles and update symlinks..."
-    cd $DOTFILES && ./sync.py && cd -
+    cd ${DOTFILES} && ./sync.py && cd -
 }
 
 finish() {
-  echo
-  success "All done!"
-  echo "The config files should be working now, at least I hope."
-  echo "Remember to restart your terminal to assure everything will work properly."
-  echo "You can also use the rbash command if you want just to reload the bash shell."
-  echo
-  sleep 1
+    echo
+    success "All done!"
+    echo "The config files should be working now, at least I hope."
+    echo "Remember to restart your terminal to assure everything will work properly."
+    echo "You can also use the rebash command if you want just to reload the bash shell."
+    echo
 }
 
+fail() {
+    echo
+    error "It seems like something wrong happened..."
+    echo "I'm not sure on what happened, so please send me an issue at https://github.com/YohananDiamond/dotfiles/issues"
+    echo "The best way I know to help debugging is sending the output of these commands:"
+    echo ">"
+    echo "    set +x && ./install.sh && set -x"
+    echo "<"
+
+    
+
 main() {
-    welcome $@
-    install_programs $@
-    install_dotfiles $@
-    finish $@
-}; main $@
+    welcome $@ \
+    && install_programs $@ \
+    && install_dotfiles $@ \
+    && finish $@ \
+    || fail
+}
+
+main $@

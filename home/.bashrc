@@ -1,26 +1,23 @@
 #!/usr/bin/env bash
-#
-# YohananDiamond's Bashrc
 
-# CONSTANTS ######################################
+# EXPORTING ######################################
 
-if [[ -f ~/.config/_vars/DOTFILES ]]; then
-    export DOTFILES=$(cat ~/.config/_vars/DOTFILES)
+if [[ -f ~/.config/.vars/DOTFILES ]]; then
+    export DOTFILES=$(cat ~/.config/.vars/DOTFILES)
 else
     export DOTFILES=~/git/dotfiles
 fi
-export COLUMNS # Make all processes know the amount of columns
 
-export PLATFORM="std"
-[[ -r /sdcard ]] && export PLATFORM="termux"
+export EDITOR="nvim"
+export TERMINAL="gnome-terminal"
 
 # HEADER FILES ###################################
 
 . $DOTFILES/lib/bash-header.sh
 . $DOTFILES/lib/bash-std.sh
 
+# Personal Scripts that I can't show here
 if [[ -f ~/git/personal/lib/bash-pv.sh ]]; then 
-    # Personal Scripts that I can't show here
     . ~/git/personal/lib/bash-pv.sh
 fi
 
@@ -31,24 +28,27 @@ fi
 
 test -r $DOTFILES/dircolors && eval "$(dircolors -b $DOTFILES/dircolors)" || eval "$(dircolors -b)"
 
-export EDITOR="nvim"
-export TERMINAL="gnome-terminal"
-
 # ALIASES & FUNCTIONS ############################
 
 alias rebash='source $HOME/.bashrc'
-alias vp="(cd $HOME/git/personal && vi)"
 alias ls='ls --color=auto'
 alias la='ls -A'
 alias ll='ls -alF'
 alias l='ls -CF'
-alias cl='cd $@ && la'
 alias py3='python3' 
-alias ipy3='ipython'
 alias du='du -shc'
 alias cps='cp -ur'
-alias vi='nvim'
-alias vim='nvim'
+
+# vi/vim/nvim aliases
+alias vim='nvim' vi='nvim'
+alias vp="(cd ${HOME}/git/personal && vi)"
+alias vc="(cd ${DOTFILES} && vi)"
+
+# fuzzy aliases
+alias fpv='(cd ~/git/personal && vi $(find . | fzf))'
+alias fv='vi $(find . | fzf)'
+alias fc='cd "$(no-recursive-fuzzy-cd)"' # Available in dotfiles/bin
+alias ft='grept | fzf'
 
 vs() {(
     # Open session.vim
@@ -76,7 +76,7 @@ grept() {
 }
 
 # Open files
-if [[ ${PLATFORM} == "termux" ]]; then
+if [[ -r /sdcard ]]; then
     alias open='termux-open'
 else
     alias open='xdg-open'
@@ -99,55 +99,69 @@ export LESS_TERMCAP_se=$'\e[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\e[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\e[0m'        # reset underline
 
+git-branch() {
+    local branch="$(git symbolic-ref --short -q HEAD 2>/dev/null)"
+    if [[ -n "${branch}" ]]; then
+        echo " ${branch}"
+    fi
+}
+
 # Prompt Config
 # I've made it way simpler than before (I was using a kinda-glitchy python script I made)
-set_prompt() {
+__set_prompt() {
 
-    # Initial Colors
-    local COL_RESET='\[\e[m\]'
-    local COL_MAIN='\[\e[38;5;190m\]\[\e[48;5;237m\]'
-    local COL_ALT='\[\e[38;5;180m\]\[\e[48;5;237m\]'
+    # Set colors
+    local _RESET='\[\e[m\]'
+    local _BORDER='\[\e[31m\]'
+    local _USER='\[\e[34m\]'
+    local _BRANCH='\[\e[36m\]'
+    local _PWD='\[\e[35m\]'
+    # local _BORDER='\[\e[38;5;190m\]'
+    # local _MAIN='\[\e[38;5;180m\]'
+    # local _GITP='\[\e[38;5;33m\]'
 
-    # Increment PQ bit by bit.
-    # PQ is the short for PROMPT_QUEUE
-    local PQ=${COL_MAIN}' ($(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo \u))'${COL_RESET}
-    local PQ=${PQ}${COL_ALT}' \w '${COL_RESET}
-    local PQ=${PQ}' ' # Last space
-    export PS1="$PQ"
+    # Actually build the prompt
+    local _PROMPT=''
+    local _PROMPT+=${_BORDER}'['
+    local _PROMPT+=${_USER}
+    local _PROMPT+='\u:'
+    local _PROMPT+=${_BRANCH}
+    local _PROMPT+='$(git-branch)'
+    local _PROMPT+=${_PWD}
+    local _PROMPT+=' \w'
+    local _PROMPT+=${_BORDER}']'
+    local _PROMPT+=${_RESET}
+    local _PROMPT+='\$ '
+    export PS1="${_PROMPT}"
 
-}; set_prompt
+}; __set_prompt
 
 # PATH ###########################################
 
-pathappend "$HOME/.local/bin"
-pathappend "$DOTFILES/bin"
-pathappend "$DOTFILES/lib"
-# [[ -r "/root/.cargo/bin" ]] && pathappend "/root/.cargo/bin" # For some reason it is not added automatically by rustup on my machine
-
-# BASH_PROFILE ###################################
-
-if [ -n "$DESKTOP_SESSION" ]; then
-    eval $(gnome-keyring-daemon --start)
-    export SSH_AUTH_SOCK
-fi
+path-append "${HOME}/.local/bin"
+path-append "${DOTFILES}/bin"
+path-append "${DOTFILES}/lib"
 
 # FIRST LOAD CODE ################################
 
-if [[ $FIRST == 0 ]]; then
+if [[ ${FIRST} == 0 ]]; then
 
     FIRST=1
 
     # Check if bash is running on interactive mode (graphically / on a terminal).
     if [[ -t 1 ]]; then
 
-        # Start the "back" and "main" tmux sessions.
-        [[ -z "$TMUX" ]] && [[ $PWD == $HOME ]] \
-            && tmx back detach && tmx main
-
-        # Set up fzf (lazy-coded)
-        if ! [[ -r ~/.fzf ]]; then
-            git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+        # Start the "scratch" and "main" tmux sessions.
+        if [[ -z "${TMUX}" ]]; then
+            if (! tmux has -t="scratch" &>/dev/null); then
+                tm "scratch" "detach"
+            fi
+            if [[ ${PWD} == ${HOME} ]] && (! tmux-attached "main"); then
+                tm "main"
+            fi
         fi
+
+        # Set up FZF (may not work in every case, I need to check this someday)
         [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash || source /usr/share/doc/fzf/examples/key-bindings.bash
 
     fi
