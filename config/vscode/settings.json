@@ -5,7 +5,7 @@
     "editor.renderWhitespace": "selection",
     "editor.renderControlCharacters": false,
     "editor.cursorBlinking": "phase",
-    "editor.cursorSmoothCaretAnimation": false,
+    "editor.cursorSmoothCaretAnimation": true,
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
     "editor.detectIndentation": true,
@@ -43,14 +43,16 @@
   "vim.visualModeKeyBindingsNonRecursive": [
     { "before": ["<leader>", "p"], "commands": ["editor.action.clipboardPasteAction"] },
     { "before": ["<leader>", "x"], "commands": ["editor.action.clipboardCutAction"] },
-    { "before": ["<leader>", "y"], "commands": ["editor.action.clipboardCopyAction"] }
+    { "before": ["<leader>", "y"], "commands": ["editor.action.clipboardCopyAction"] },
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     { "before": ["<leader>", "p"], "commands": ["editor.action.clipboardPasteAction"] },
-    { "before": ["<leader>", "x"], "commands": ["editor.action.clipboardCutAction"] },
+    { "before": ["<leader>", "d"], "commands": ["editor.action.clipboardCutAction"] },
     { "before": ["<leader>", "y"], "commands": ["editor.action.clipboardCopyAction"] },
     { "before": ["<leader>", "o"], "commands": ["editor.toggleFold"] },
-    { "before": ["Ç"], "after": [":"] }
+    { "before": ["<leader>", "m"], "commands": ["editor.foldAll"] },
+    { "before": ["Ç"], "after": [":"] },
+    { "before": ["ç"], "after": [":"] },
   ],
   "vim.handleKeys": {
       "<C-a>": false,
@@ -62,7 +64,7 @@
       "<C-y>": false,
       "<C-r>": true,
       "<C-d>": true,
-      "<C-d>": true
+      "<C-u>": true
     },
 
     /*

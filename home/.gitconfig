@@ -14,32 +14,23 @@
     ignorecase = false
 
 [alias]
-
     a = add
     c = commit
-    ac = !git add . && git commit
+    ac = add-commit
     cm = commit -m
-    pp = !git pull && git push
+    sy = sync
+    l = log-compact
     s = status -sb
     b = branch
     co = checkout
 
-    # When doing "git git log" or some such, do not complain about "git"
-    git = !git
+    sync = !git pull && git push
+    add-commit = !git add . && git commit
+    log-compact = log --all --oneline
+    log-pretty = log --all --graph --decorate --oneline
+    log-statistic = log --stat --abbrev-commit
 
-    # Pretty commits log
-    l = log --all --graph --decorate --oneline
-
-    # Fully commits log with statistic
-    ll = log --stat --abbrev-commit
-
-    # Ignore files: append file to .ginignore
-    ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo `\n$2` >> .gitignore
-
-    # Initialize, add all files and commit
-    this = !git init && git add . && git commit -m 'Initial commit'
-
-    # List of contributors and how many commits each person has.
+    this = !git init && git add . && git commit -m "Initial commit"
     contrib = shortlog -sn
 
 [diff]

@@ -156,8 +156,8 @@ exec --no-startup-id pkill compton
 exec --no-startup-id compton -b &
 exec --no-startup-id xsetroot -cursor_name left_ptr &
 
-# Prevent focus of new windows
-no_focus [class=".*"]
+# Prevent focus of new windows (disabled cuz it didn't work very well...)
+# no_focus [class=".*"]
 
 # Pulse Audio controls
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-

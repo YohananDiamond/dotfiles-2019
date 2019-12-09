@@ -17,3 +17,6 @@ Session.vim
 # Temp / Backup Files
 *~
 *.sw*
+
+# Local files
+local

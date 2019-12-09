@@ -1,13 +1,5 @@
 [
     {
-        "key": "ctrl+x j",
-        "command": "workbench.action.nextEditorInGroup"
-    },
-    {
-        "key": "ctrl+x k",
-        "command": "workbench.action.previousEditorInGroup"
-    },
-    {
         "key": "ctrl+k shift+;",
         "command": "vim.showQuickpickCmdLine",
         "when": "editorTextFocus && vim.mode != 'Insert'"
