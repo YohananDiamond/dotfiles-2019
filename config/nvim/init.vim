@@ -76,7 +76,7 @@ filetype plugin indent on " Idk what is this but it seems to work.
 
 " Set color theme
 set background=dark
-colorscheme monokai
+colorscheme onedark
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Augroups> 
@@ -103,8 +103,7 @@ augroup rust
     au!
     au FileType rust let b:runfile_command = "cargo run"
     au FileType rust set foldmethod=syntax
-augroup end
-
+augroup end 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Functions>
 
@@ -247,7 +246,7 @@ nnoremap <silent> <Leader>r :exec ":RunFile " . b:runfile_command<CR>
 
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'deus',
+      \ 'colorscheme': 'onedark',
       \ 'active': {
       \   'left': [[ 'mode', 'paste' ], [ 'readonly', 'filename' ]],
       \ },

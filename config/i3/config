@@ -6,7 +6,8 @@ set $mod Mod4
 set $alt Mod1
 
 # Font
-font pango:Ubuntu Mono Regular 11
+# font pango:Ubuntu Mono Regular 11
+font pango:Cascadia Code Regular 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -15,7 +16,7 @@ floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
 
 # Kill focused window
-bindsym $mod+Shift+w kill
+# bindsym $mod+Shift+q kill
 
 # Change focus and move windows
 bindsym $mod+h focus left
@@ -49,18 +50,15 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+# bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+Alt+space focus mode_toggle
+bindsym $mod+$alt+space focus mode_toggle
 
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
+# bindsym $mod+a focus parent
 # bindsym $mod+d focus child
 
 # launch rofi
@@ -68,15 +66,15 @@ bindsym $mod+space exec --no-startup-id "rofi -modi combi -combi-modi window,dru
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws5  "5"
+set $ws6  "6"
+set $ws7  "7"
+set $ws8  "8"
+set $ws9  "9"
 set $ws10 "10"
 
 # switch to workspace
@@ -116,34 +114,57 @@ bindsym $mod+Shift+o exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+r mode "resize"
 
 mode "resize" {
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+    # back to normal: Enter or Escape or $mod+r
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
 }
 
 # OPTIONS ########################################
 
 # Start i3bar
 bar {
-        status_command i3status -c ~/.config/i3/i3status.conf
-        tray_output primary
-        separator_symbol "·"
-        position top
+    status_command i3status -c ~/.config/i3/i3status.conf
+    tray_output primary
+    separator_symbol "·"
+    position top
+
+    colors {
+        background #282c34
+        statusline #abb2bf
+        separator  #383c44
+        ################## Border  Back    Text
+        focused_workspace  #3b84c0 #3b84c0 #282c34
+        active_workspace   #3b84c0 #3b84c0 #282c34
+        inactive_workspace #282c34 #282c34 #abb2bf
+        urgent_workspace   #e06c75 #e06c75 #282c34
+        binding_mode       #d19a66 #d19a66 #282c34
+        ##########################################
+    }
 }
+
+# Window decoration colors
+####################### Border  Backgr. Text    Indict.
+client.placeholder      #5c6370 #5c6370 #282c34 #5c6370
+client.background       #3b84c0 #3b84c0 #282c34 #3b84c0
+client.focused          #3b84c0 #3b84c0 #282c34 #3b84c0
+client.unfocused        #282c34 #282c34 #abb2bf #282c34
+client.focused_inactive #abb2bf #abb2bf #282c34 #abb2bf
+client.urgent           #e06c75 #e06c75 #282c34 #e06c75
+#######################################################
 
 # Other options
 focus_follows_mouse no
@@ -152,12 +173,16 @@ focus_follows_mouse no
 exec --no-startup-id xset r rate 400 35
 
 # Related programs
-exec --no-startup-id pkill compton
-exec --no-startup-id compton -b &
+exec --no-startup-id compton -b
 exec --no-startup-id xsetroot -cursor_name left_ptr &
+exec_always --no-startup-id exec bash $HOME/.fehbg
 
-# Prevent focus of new windows (disabled cuz it didn't work very well...)
-# no_focus [class=".*"]
+# Fibonnati (kinda)
+# https://www.reddit.com/r/i3wm/comments/4tw1jn/tip_quasi_alternatingfibonacci_layout/
+default_orientation vertical
+for_window [class=".*"] split toggle
+bindsym $mod+shift+q split toggle kill
+bindsym $mod+e layout toggle split
 
 # Pulse Audio controls
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-
