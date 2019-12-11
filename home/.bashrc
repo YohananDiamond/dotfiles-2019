@@ -9,7 +9,7 @@ else
 fi
 
 export EDITOR="nvim"
-export TERMINAL="gnome-terminal"
+export TERMINAL="st"
 
 # HEADER FILES ###################################
 
@@ -19,6 +19,11 @@ export TERMINAL="gnome-terminal"
 # Personal Scripts that I can't show here
 if [[ -f ~/git/personal/lib/bash-pv.sh ]]; then 
     . ~/git/personal/lib/bash-pv.sh
+fi
+
+# Local Scripts
+if [[ -f ~/.bashrc.local ]]; then
+    . ~/.bashrc.local
 fi
 
 # INIT VARS ######################################

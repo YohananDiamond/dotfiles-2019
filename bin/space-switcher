@@ -4,7 +4,9 @@ main() {
 
     local self_run="env space-switcher"
     local fuzzy="fzf" # in ("fzf" | "rofi -dmenu")
-    gnome-terminal --geometry="500x20+1000+1000" --command="${self_run} ${fuzzy}"
+    st -g 80x20 -c "float" -t "Space Switcher" -e "${self_run} ${fuzzy}"
+    # st -g "500x20+1000+1000" -t "__space_switcher" -c "popup" -e "${self_run} ${fuzzy}"
+    # gnome-terminal --geometry="500x20+1000+1000" --command="${self_run} ${fuzzy}"
 
 } 
 

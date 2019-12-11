@@ -30,7 +30,7 @@
     log-pretty = log --all --graph --decorate --oneline
     log-statistic = log --stat --abbrev-commit
 
-    this = !git init && git add . && git commit -m "Initial commit"
+    this = !git init && git add . && git commit -m 'Initial commit'
     contrib = shortlog -sn
 
 [diff]

@@ -6,14 +6,14 @@ set $mod Mod4
 set $alt Mod1
 
 # Font
-# font pango:Ubuntu Mono Regular 11
 font pango:Cascadia Code Regular 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # Start a Terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec st
+# bindsym $mod+Return exec i3-sensible-terminal
 
 # Kill focused window
 # bindsym $mod+Shift+q kill
@@ -101,6 +101,10 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
+# walk through 
+bindsym $mod+Ctrl+k workspace prev
+bindsym $mod+Ctrl+j workspace next
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -177,6 +181,9 @@ exec --no-startup-id compton -b
 exec --no-startup-id xsetroot -cursor_name left_ptr &
 exec_always --no-startup-id exec bash $HOME/.fehbg
 
+# Applets
+exec --no-startup-id nm-applet
+
 # Fibonnati (kinda)
 # https://www.reddit.com/r/i3wm/comments/4tw1jn/tip_quasi_alternatingfibonacci_layout/
 default_orientation vertical
@@ -184,7 +191,19 @@ for_window [class=".*"] split toggle
 bindsym $mod+shift+q split toggle kill
 bindsym $mod+e layout toggle split
 
+for_window [class="float"] floating enable
+
 # Pulse Audio controls
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 5%+
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse set Master 1+ toggle
+
+# Media player key bindings (you need playerctl for this to work.)
+bindsym XF86AudioPlay exec playerctl pause
+#                ^^^^ On my PC it's a Toggle
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Brightness key bindings
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
