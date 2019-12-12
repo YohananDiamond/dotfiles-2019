@@ -16,7 +16,7 @@ bindsym $mod+Return exec st
 # bindsym $mod+Return exec i3-sensible-terminal
 
 # Kill focused window
-# bindsym $mod+Shift+q kill
+bindsym $mod+Shift+q kill
 
 # Change focus and move windows
 bindsym $mod+h focus left
@@ -48,9 +48,9 @@ bindsym $mod+u split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+# bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-# bindsym $mod+e layout toggle split
+bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -186,10 +186,10 @@ exec --no-startup-id nm-applet
 
 # Fibonnati (kinda)
 # https://www.reddit.com/r/i3wm/comments/4tw1jn/tip_quasi_alternatingfibonacci_layout/
-default_orientation vertical
-for_window [class=".*"] split toggle
-bindsym $mod+shift+q split toggle kill
-bindsym $mod+e layout toggle split
+# default_orientation vertical
+# for_window [class=".*"] split toggle
+# bindsym $mod+shift+q split toggle kill
+# bindsym $mod+e layout toggle split
 
 for_window [class="float"] floating enable
 
