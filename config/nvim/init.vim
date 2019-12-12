@@ -74,6 +74,7 @@ set listchars+=trail:~
 
 filetype plugin indent on " Idk what is this but it seems to work.
 
+" Enable RGB colors
 set termguicolors
 
 " Correct RGB escape codes for vim inside tmux
@@ -188,8 +189,8 @@ vmap <Space> <Leader>
 set timeoutlen=1000 ttimeoutlen=0
 
 " Mouse Wheel Scrolling
-map <ScrollWheelUp> <C-U>
-map <ScrollWheelDown> <C-D>
+map <ScrollWheelUp> 15<C-Y>
+map <ScrollWheelDown> 15<C-E>
 
 " Select all
 nnoremap <silent> <Leader>a ggVG
