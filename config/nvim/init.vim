@@ -90,11 +90,12 @@ colorscheme onedark
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Augroups> 
 
-augroup todoq
+augroup tq
     au!
-    au BufNewFile,BufRead,BufEnter *.tq set filetype=todoq
-    au FileType todoq call OptSpaceIndentation(4)
-    au FileType todoq setlocal foldmethod=indent
+    au BufNewFile,BufRead,BufEnter *.tq set filetype=tq
+    au FileType tq set syntax=tq
+    au FileType tq setlocal foldmethod=indent
+    au FileType tq call OptSpaceIndentation(4)
 augroup end
 
 augroup sh
@@ -146,7 +147,7 @@ endfunc
 
 func! OpenWORD()
     let l:WORD = expand("<cWORD>")
-    execute '!xdg-open '.l:WORD
+    execute '!xdg-open '.l:WORD.' &'
 endfunc
 
 func! TabOrComplete(mode)
