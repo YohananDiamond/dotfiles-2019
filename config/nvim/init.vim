@@ -196,15 +196,18 @@ map <ScrollWheelDown> 15<C-E>
 " Select all
 nnoremap <silent> <Leader>a ggVG
 
-" Copy to registers
-nnoremap <silent> <Leader>y "+y
-nnoremap <silent> <Leader>p "+p
-nnoremap <silent> <Leader>d "+d
-nnoremap <silent> <Leader>Y "+Y
-nnoremap <silent> <Leader>P "+P
-nnoremap <silent> <Leader>D "+D
-vnoremap <silent> <Leader>y "+y
-vnoremap <silent> <Leader>d "+d
+" Copy to X register (I guess)
+" How this works: the other keybindings usually work; but, if they don't exist, this will instead send the "+ combination.
+nnoremap <silent> <Leader> "+
+vnoremap <silent> <Leader> "+
+" nnoremap <silent> <Leader>y "+y
+" nnoremap <silent> <Leader>p "+p
+" nnoremap <silent> <Leader>d "+d
+" nnoremap <silent> <Leader>Y "+Y
+" nnoremap <silent> <Leader>P "+P
+" nnoremap <silent> <Leader>D "+D
+" vnoremap <silent> <Leader>y "+y
+" vnoremap <silent> <Leader>d "+d
 
 " Indentation Management
 nnoremap <silent> <Tab> >>
@@ -229,12 +232,17 @@ nnoremap <silent> <Leader>gf :CtrlPMixed<CR>
 nmap <silent> <Leader>b <C-p>
 
 " Folding Commands
-nnoremap <silent> <Leader>o zA
+nnoremap <silent> <Leader>j zo
+nnoremap <silent> <Leader>k zc
 nnoremap <silent> <Leader>m zm
+" nnoremap <silent> <Leader>o zA
 
 " Escape terminal in nvim
-tnoremap <silent> <C-w> <C-\><C-n><C-w>
-tnoremap <silent> <M-w> <C-\><C-n>
+tnoremap <silent> <C-w>h <C-\><C-n>h
+tnoremap <silent> <C-w>j <C-\><C-n>j
+tnoremap <silent> <C-w>k <C-\><C-n>k
+tnoremap <silent> <C-w>l <C-\><C-n>l
+tnoremap <silent> <C-w> <C-\><C-n>
 
 " Use Tab to Complete or insert spaces
 " inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>

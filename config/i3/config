@@ -12,7 +12,7 @@ font pango:Cascadia Code Regular 10
 floating_modifier $mod
 
 # Start a Terminal
-bindsym $mod+Return exec st
+bindsym $mod+Return exec st -t "Suckless Terminal"
 # bindsym $mod+Return exec i3-sensible-terminal
 
 # Kill focused window
@@ -184,13 +184,7 @@ exec_always --no-startup-id exec bash $HOME/.fehbg
 # Applets
 exec --no-startup-id nm-applet
 
-# Fibonnati (kinda)
-# https://www.reddit.com/r/i3wm/comments/4tw1jn/tip_quasi_alternatingfibonacci_layout/
-# default_orientation vertical
-# for_window [class=".*"] split toggle
-# bindsym $mod+shift+q split toggle kill
-# bindsym $mod+e layout toggle split
-
+# Rules
 for_window [class="float"] floating enable
 
 # Pulse Audio controls
