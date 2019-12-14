@@ -55,6 +55,7 @@ alias fpv='(cd ~/git/personal && vi $(find . | fzf))'
 alias fv='vi $(find . | fzf)'
 alias fc='cd "$(no-recursive-fuzzy-cd)"' # Available in dotfiles/bin
 alias ft='grept | fzf'
+alias rd='(cd ~/Documents/html-pages && open "$(ls | grep "\.html$" | fzf)")'
 
 vs() {(
     # Open session.vim
