@@ -5,9 +5,12 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let g:pathogen_disabled = []
-if isdirectory('/sdcard')
-    call add(g:pathogen_disabled, 'ultisnips')
+if has("python3")
+    call add(g:pathogen_disabled, "VimCompletesMe")
+else
+    call add(g:pathogen_disabled, "deoplete.nvim")
 endif
+let g:deoplete#enable_at_startup = 1
 execute pathogen#infect()
 
 " Initial Variables
@@ -24,7 +27,7 @@ if has('gui_running')
     if isdirectory('C:\')
         let &guifont='Fixedsys 9,Ubuntu Mono 12,Fira Code 10.5,Cascadia Code 10.5,Consolas 12,Monospace 12'
     else
-        let &guifont='Ubuntu Mono 12,Fira Code 10.5,Cascadia Code 10.5,Consolas 12,Monospace 12'
+        let &guifont='Cascadia Code 10.5,Fira Code 10.5,Ubuntu Mono 12,Consolas 12,Monospace 12'
     endif
 endif
 
@@ -114,6 +117,7 @@ augroup rust
     au FileType rust let b:runfile_command = "cargo run"
     au FileType rust set foldmethod=syntax
 augroup end 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <Functions>
 
@@ -245,8 +249,8 @@ tnoremap <silent> <C-w>l <C-\><C-n>l
 tnoremap <silent> <C-w> <C-\><C-n>
 
 " Use Tab to Complete or insert spaces
-" inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>
-" inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
+inoremap <silent> <Tab> <C-r>=TabOrComplete(1)<CR>
+inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
 
 " Navigate with <C-k>, <C-j> and <C-m> on Completion Mode
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "<C-j>"
