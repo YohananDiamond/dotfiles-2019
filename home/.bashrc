@@ -44,6 +44,7 @@ alias py3='python3'
 alias du='du -shc'
 alias cps='cp -ur'
 alias g='git'
+alias r='ranger'
 
 # vi/vim/nvim aliases
 alias vim='nvim' vi='nvim'
