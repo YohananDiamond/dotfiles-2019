@@ -16,7 +16,7 @@ syntax match tqTagValue "\v \@(\w|-|\.){1,}\((\w|\d|-)*\)"
 " Match -> Others
 syntax match tqComment "\v^\s*#.*$"
 syntax match tqDate "\v\d{4}(-\d{2}){2}"
-syntax match tqDateTime "\v\d{4}(-\d{2}){2}\.\d{2}:\d{2}"
+syntax match tqDateTime "\v\d{4}(-\d{2}){2}\-\d{2}:\d{2}"
 syntax match tqHyperlink "\vhttp(s?)://(\w|/|\?|\+|\=|\.|\#|-|\~|\@)*"
 
 " Link the syntax

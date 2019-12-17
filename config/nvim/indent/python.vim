@@ -207,6 +207,6 @@ unlet s:keepcpo
 setlocal cindent
 setlocal smartindent
 setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
-let b:runfile_command = "python3"
+let b:runfile_command = "pylint % && python3"
 
 " vim:sw=2
