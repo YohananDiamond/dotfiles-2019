@@ -135,7 +135,7 @@ fail() {
     echo ">"
     echo "    set +x && ./install.sh && set -x"
     echo "<"
-
+}
     
 
 main() {

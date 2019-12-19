@@ -10,6 +10,7 @@ fi
 
 export EDITOR="nvim"
 export TERMINAL="st"
+export BAT_THEME="base16" # Theme for bat (cat with syntax highlighting)
 
 # HEADER FILES ###################################
 
