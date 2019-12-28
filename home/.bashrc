@@ -1,105 +1,31 @@
 #!/usr/bin/env bash
 
-# EXPORTING ######################################
+# ENVIRONMENT VARIABLES ##########################
 
-if [[ -f ~/.config/.vars/DOTFILES ]]; then
-    export DOTFILES=$(cat ~/.config/.vars/DOTFILES)
-else
-    export DOTFILES=~/git/dotfiles
-fi
-
+export DOTFILES="${HOME}/git/dotfiles"
+export GIT_PERSONAL="${HOME}/git/personal"
 export EDITOR="nvim"
 export TERMINAL="st"
 export BAT_THEME="base16" # Theme for bat (cat with syntax highlighting)
 
-# HEADER FILES ###################################
+# SOURCING ########################################
 
-. $DOTFILES/lib/bash-header.sh
-. $DOTFILES/lib/bash-std.sh
+source_if() { [ -f "${1}" ] && source "${1}"; }
 
-# Personal Scripts that I can't show here
-if [[ -f ~/git/personal/lib/bash-pv.sh ]]; then 
-    . ~/git/personal/lib/bash-pv.sh
-fi
+source "${DOTFILES}/lib/bash-header.sh"
+source "${DOTFILES}/lib/bash-std.sh"
 
-# Local Scripts
-if [[ -f ~/.bashrc.local ]]; then
-    . ~/.bashrc.local
-fi
+# Personal and local scripts
+source_if "${GIT_PERSONAL}/lib/bash-pv.sh"
+source_if "${HOME}/.bashrc.local"
 
-# INIT VARS ######################################
+# APPLICATION SETTINGS ###########################
 
-# Bash "first run in session" code
-[[ -z "$FIRST" ]] && FIRST=0
-
-test -r $DOTFILES/dircolors && eval "$(dircolors -b $DOTFILES/dircolors)" || eval "$(dircolors -b)"
-
-# ALIASES & FUNCTIONS ############################
-
-alias rebash='source $HOME/.bashrc'
-alias ls='ls --color=auto'
-alias la='ls -A'
-alias ll='ls -alF'
-alias l='ls -CF'
-alias py3='python3' 
-alias du='du -shc'
-alias cps='cp -ur'
-alias g='git'
-alias r='ranger'
-
-# vi/vim/nvim aliases
-alias vim='nvim' vi='nvim'
-alias vp="(cd ${HOME}/git/personal && vi)"
-alias vc="(cd ${DOTFILES} && vi)"
-
-# fuzzy aliases
-alias fpv='(cd ~/git/personal && vi $(find . | fzf))'
-alias fv='vi $(find . | fzf)'
-alias fc='cd "$(no-recursive-fuzzy-cd)"' # Available in dotfiles/bin
-alias ft='grept | fzf'
-alias rd='(cd ~/Documents/html-pages && open "$(ls | grep "\.html$" | fzf)")'
-
-vs() {(
-    # Open session.vim
-    if [ -f Session.vim ]; then
-        vi -S Session.vim # Open the vim session
-    else
-        cd $(git rev-parse --show-toplevel 2>/dev/null) # CD to the top of the git repository, if on the git repository.
-        vi -S Session.vim
-    fi
-)}
-
-cgt() {
-    # CD to Git Top Level (cd-git-top)
-    local result=$(git rev-parse --show-toplevel 2>/dev/null)
-    if [ -z "${result}" ]; then
-        cd "${result}"
-    else
-        echo "cgt: not on a git repository."
-    fi
-}
-
-grept() {
-    grep --exclude-dir=".git" -rEI "TODO:|FIXME:|@todo|@fixme" . 2>/dev/null
-    grep --exclude-dir=".git" -rEI "NOTE:|@note" . 2>/dev/null
-}
-
-# Open files
-if [[ -r /sdcard ]]; then
-    alias open='termux-open'
-else
-    alias open='xdg-open'
-fi
-
-# SETTINGS ######################################
-
-# Larger History
+# bash
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000000
 
-# THEMING #######################################
-
-# "less" config
+# less | man
 export LESS_TERMCAP_mb=$'\e[1;31m'     # begin bold
 export LESS_TERMCAP_md=$'\e[1;35m'     # begin blink
 export LESS_TERMCAP_me=$'\e[0m'        # reset bold/blink
@@ -108,6 +34,77 @@ export LESS_TERMCAP_se=$'\e[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\e[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\e[0m'        # reset underline
 
+# ls | dir
+test -r "${DOTFILES}/config/dircolors" \
+    && eval "$(dircolors -b "${DOTFILES}/config/dircolors")" \
+    || eval "$(dircolors -b)"
+
+# PATH ###########################################
+
+path_add "${HOME}/.local/bin"
+path_add "${DOTFILES}/bin"
+path_add "${DOTFILES}/lib"
+
+# ALIASES ########################################
+
+alias ls='ls --color=auto'
+alias la='ls -A'
+alias ll='ls -alF'
+# alias l='ls -CF'
+
+alias py3='python3'
+alias p3='python3'
+alias jl='julia'
+alias du='du -shc'
+alias r='ranger'
+alias vim='nvim' vi='nvim'
+# alias g='git'
+
+alias cp-sync='cp -ur'
+
+# USER FUNCTIONS #################################
+# These functions were designed to be used in ####
+# the shell; because of that, they should have ###
+# dashes '-' instead of underscores '_'. #########
+
+rl() { source "${HOME}/.bashrc"; }
+vp() { (cd "${GIT_PERSONAL}" && vi); }
+vf() { vi "$(find . | fzf)"; }
+# cdr() { cd "$(no-recursive-fuzzy-cd)"; }
+
+rd() {
+    local CHOICEPATH="${HOME}/Documents/html-pages"
+    local CHOICE="$(ls "${CHOICEPATH}" | grep '\.html$' | fzf)"
+    open "${CHOICEPATH}/${CHOICE}" &
+}
+
+vs() {
+    ([ -f "Session.vim" ] \
+        && vi -S "Session.vim" \
+        || cd "$(git rev-parse --show-toplevel 2>/dev/null)" \
+        && vi -S "Session.vim")
+}
+
+cdgt() {
+    # CD to Git Top Level (cd-git-top)
+    local result=$(git rev-parse --show-toplevel 2>/dev/null)
+    [ -z "${result}" ] && cd "${result}" \
+        || echo "cgt: not on a git repository."
+}
+
+grept() {
+    grep --exclude-dir=".git" -rEI "TODO:|FIXME:|@todo|@fixme" . 2>/dev/null
+    grep --exclude-dir=".git" -rEI "NOTE:|@note" . 2>/dev/null
+}
+
+if [ -r "/sdcard" ]; then
+    open() { termux-open "${1}"; } # No need for "& true" here.
+else
+    open() { xdg-open "${1}"; }
+fi
+
+# THEMING #######################################
+
 git-branch() {
     local branch="$(git symbolic-ref --short -q HEAD 2>/dev/null)"
     if [[ -n "${branch}" ]]; then
@@ -115,8 +112,8 @@ git-branch() {
     fi
 }
 
-# Prompt Config
-# I've made it way simpler than before (I was using a kinda-glitchy python script I made)
+# PROMPT CONFIG ##################################
+
 __set_prompt() {
 
     # Set colors
@@ -125,9 +122,6 @@ __set_prompt() {
     local _USER='\[\e[34m\]'
     local _BRANCH='\[\e[36m\]'
     local _PWD='\[\e[35m\]'
-    # local _BORDER='\[\e[38;5;190m\]'
-    # local _MAIN='\[\e[38;5;180m\]'
-    # local _GITP='\[\e[38;5;33m\]'
 
     # Actually build the prompt
     local _PROMPT=''
@@ -145,27 +139,16 @@ __set_prompt() {
 
 }; __set_prompt
 
-# PATH ###########################################
-
-path-append "${HOME}/.local/bin"
-path-append "${DOTFILES}/bin"
-path-append "${DOTFILES}/lib"
-
-# FIRST LOAD CODE ################################
-
-if [[ ${FIRST} == 0 ]]; then
-
-    FIRST=1
-
-    # Check if bash is running on interactive mode (graphically / on a terminal).
-    if [[ -t 1 ]]; then
-
+if [ -z "${__SETUP}" ]; then
+    __SETUP="$(date)"
+    if [ -t 1 ]; then # If this session is a TTY
         # Start the "scratch" and "main" tmux sessions.
-        if [[ -z "${TMUX}" ]]; then
-            if (! tmux has -t="scratch" &>/dev/null); then
+        if [ -z "${TMUX}" ]; then
+            if ! tmux has -t="scratch" &>/dev/null; then
                 tm "scratch" "detach"
             fi
-            if [[ ${PWD} == ${HOME} ]] && (! tmux-attached "main"); then
+
+            if [ "${PWD}" = "${HOME}" ] && ! tmux-attached "main"; then
                 tm "main"
             fi
         fi
@@ -174,6 +157,4 @@ if [[ ${FIRST} == 0 ]]; then
         [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash || source /usr/share/doc/fzf/examples/key-bindings.bash
 
     fi
-
 fi
-

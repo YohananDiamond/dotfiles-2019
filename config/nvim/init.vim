@@ -12,7 +12,6 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 execute pathogen#infect()
-
 " Initial Variables
 let g:Config = {}
 let g:Config.InitPath = resolve(expand('<sfile>:p:h'))
@@ -98,7 +97,7 @@ augroup tq
     au BufNewFile,BufRead,BufEnter *.tq set filetype=tq
     au FileType tq set syntax=tq
     au FileType tq setlocal foldmethod=indent
-    au FileType tq call OptSpaceIndentation(4)
+    au FileType tq call OptSpaceIndentation(2)
 augroup end
 
 augroup sh
@@ -116,6 +115,12 @@ augroup rust
     au!
     au FileType rust let b:runfile_command = "cargo run"
     au FileType rust set foldmethod=syntax
+augroup end 
+
+augroup julia
+    au!
+    au BufNewFile,BufRead,BufEnter *.jl set filetype=julia
+    au FileType julia let b:runfile_command = "julia"
 augroup end 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -197,21 +202,10 @@ set timeoutlen=1000 ttimeoutlen=0
 map <ScrollWheelUp> 15<C-Y>
 map <ScrollWheelDown> 15<C-E>
 
-" Select all
-nnoremap <silent> <Leader>a ggVG
-
 " Copy to X register (I guess)
 " How this works: the other keybindings usually work; but, if they don't exist, this will instead send the "+ combination.
 nnoremap <silent> <Leader> "+
 vnoremap <silent> <Leader> "+
-" nnoremap <silent> <Leader>y "+y
-" nnoremap <silent> <Leader>p "+p
-" nnoremap <silent> <Leader>d "+d
-" nnoremap <silent> <Leader>Y "+Y
-" nnoremap <silent> <Leader>P "+P
-" nnoremap <silent> <Leader>D "+D
-" vnoremap <silent> <Leader>y "+y
-" vnoremap <silent> <Leader>d "+d
 
 " Indentation Management
 nnoremap <silent> <Tab> >>
@@ -227,19 +221,19 @@ nmap Ç :
 nmap ç :
 
 " Open command-line mode
-nnoremap <silent> qç q:
-nnoremap <silent> qÇ q:
+" nnoremap <silent> qç q:
+" nnoremap <silent> qÇ q:
 
 " Open files, MRU and ALL on CtrlP with a slightly different mapping (see <Plugin Settings> section)
 nnoremap <silent> <Leader>f :CtrlP<CR>
-nnoremap <silent> <Leader>gf :CtrlPMixed<CR>
 nmap <silent> <Leader>b <C-p>
 
 " Folding Commands
 nnoremap <silent> <Leader>j zo
 nnoremap <silent> <Leader>k zc
+nnoremap <silent> <Leader>J zO
+nnoremap <silent> <Leader>K zC
 nnoremap <silent> <Leader>m zm
-" nnoremap <silent> <Leader>o zA
 
 " Escape terminal in nvim
 tnoremap <silent> <C-w>h <C-\><C-n>h
@@ -256,9 +250,6 @@ inoremap <silent> <S-Tab> <C-r>=TabOrComplete(0)<CR>
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "<C-k>"
 inoremap <expr> <C-m> pumvisible() ? "\<C-y>" : "<C-m>"
-
-" Filename completion with <C-l>
-inoremap <silent> <C-l> <C-x><C-f>
 
 " Run a file
 nnoremap <silent> <Leader>r :exec ":RunFile " . b:runfile_command<CR>
@@ -285,4 +276,4 @@ set belloff+=ctrlg " If Vim beeps during completion
 let g:mucomplete#enable_auto_at_startup = 1
 
 " Load all packages (plugins)
-packloadall
+" packloadall
