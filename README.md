@@ -1,3 +1,5 @@
+> This repository is outdated. See https://github.com/YohananDiamond/dotfiles.
+
 # dotfiles
 
 This repository is a collection for my dotfiles for bash, vim, tmux, termux and some others.
